@@ -1,9 +1,5 @@
-.app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  font-family: sans-serif;
-  font-weight: normal;
+@use "./global.scss" as *;
+
+body {
+  background-color: black;
 }
