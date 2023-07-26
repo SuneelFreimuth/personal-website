@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 
-import { hslToRgb, rgbString } from './lib';
-import { BackgroundAnimation } from './components/BackgroundAnimation';
+import { hslToRgb, lerpColors, rgbString } from './lib';
+import { AnimatedBackground } from './components/AnimatedBackground';
 
 import styles from './Blog.module.scss'
 
@@ -120,18 +120,21 @@ function SnakeBackground() {
       ctx.clearRect(0, 0, width, height)
 
       ctx.save()
-      ctx.translate(width % TILE_SIZE / 2, height % TILE_SIZE / 2)
+      ctx.translate(
+        Math.floor((width % TILE_SIZE) / 2),
+        Math.floor((height % TILE_SIZE) / 2)
+      )
 
       ctx.beginPath()
-      ctx.fillStyle = '#F00'
-      ctx.roundRect(game.apple[0] * TILE_SIZE, game.apple[1] * TILE_SIZE, TILE_SIZE, TILE_SIZE, 2)
+      ctx.fillStyle = 'hsl(343, 81%, 75%)'
+      ctx.roundRect(game.apple[0] * TILE_SIZE, game.apple[1] * TILE_SIZE, TILE_SIZE, TILE_SIZE, 0)
       ctx.fill()
 
       ctx.strokeStyle = 'none'
       let i = 0
       for (const [c, r] of game.snake) {
-        ctx.fillStyle = rgbString(hslToRgb([120 - 2 * i, 1, 0.5]))
-        ctx.fillRect(c * TILE_SIZE - 1, r * TILE_SIZE - 1, TILE_SIZE + 2, TILE_SIZE + 2);
+        ctx.fillStyle = rgbString(lerpColors(i / 50, [166, 227, 161], [249, 226, 175]))
+        ctx.fillRect(c * TILE_SIZE, r * TILE_SIZE, TILE_SIZE + 1, TILE_SIZE + 1);
         i++
       }
 
@@ -217,5 +220,5 @@ function SnakeBackground() {
   const posEqual = (a: Pos, b: Pos): boolean =>
     a[0] == b[0] && a[1] == b[1];
 
-  return <BackgroundAnimation setup={setup} draw={draw} />;
+  return <AnimatedBackground setup={setup} draw={draw} />;
 }

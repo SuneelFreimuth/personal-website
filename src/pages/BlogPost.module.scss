@@ -1,0 +1,92 @@
+@use "../global.scss" as *;
+
+.blogPost {
+  display: flex;
+  justify-content: center;
+  margin: 120px 0;
+  color: white;
+  font-family: $font-sans-serif;
+
+  .post {
+    width: 800px;
+  }
+}
+
+.post {
+  font-family: $font-sans-serif;
+  color: white;
+
+  h1 {
+    font-weight: 200;
+    font-size: 3rem;
+    margin: 10px 0;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 200;
+  }
+  
+  article {
+    margin-top: 30px;
+    font-size: 16px;
+    
+    & > * {
+      margin: 1.5rem 0;
+    }
+
+    p .inlineMath {
+      position: relative;
+      // box-sizing: content-box;
+      cursor: pointer;
+      background-blend-mode: darken;
+      &:hover {
+        $border-size: 10px;
+        $color: #f0f4ff40;
+        border-radius: 26px;
+        background-clip: border-box;
+        background-color: $color;
+        border: $border-size solid transparent;
+        left: -$border-size;
+      }
+    }
+
+    .codeBlock {
+      position: relative;
+      border-radius: 5px;
+      overflow: hidden;
+
+      .copyToClipboard {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        padding: 3px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 2px;
+
+        img {
+          opacity: 50%;
+          transition: opacity 80ms;
+          width: 100%;
+        }
+
+        &:hover img {
+          opacity: 100%;
+        }
+
+        &:active {
+          background-color: #FFF5;
+        }
+      }
+
+      code {
+        font-size: 16px;
+        line-height: 1.4rem;
+      }
+    }
+  }
+}

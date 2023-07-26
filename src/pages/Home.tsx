@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react'
 import { Color, randomHsl, random, lerp, hslToRgb, rgbString as rgbString, lerpColors, map } from './lib'
 
 import styles from './Home.module.scss'
-import { BackgroundAnimation } from './components/BackgroundAnimation';
+import { AnimatedBackground } from './components/AnimatedBackground';
 
 export function Home() {
   // <App/> maximizes <Nav/> for /home.
@@ -153,5 +153,5 @@ function TreeAnimation() {
     return x + EPS >= 0 && x - EPS <= w
   };
 
-  return <BackgroundAnimation setup={setup} draw={draw} />
+  return <AnimatedBackground setup={setup} draw={draw} />
 }

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, EffectCallback } from 'react'
 
 import { debounce } from '../lib'
 
-export function BackgroundAnimation({ setup, draw }: {
+export function AnimatedBackground({ setup, draw }: {
   setup: (ctx: CanvasRenderingContext2D) => void,
   draw: (ctx: CanvasRenderingContext2D, frameCount: number) => void,
 }) {

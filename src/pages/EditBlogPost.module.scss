@@ -1,0 +1,30 @@
+@use "../global.scss" as *;
+
+.editBlogPost {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 120px;
+  height: 100vh;
+  
+  & > * {
+    margin: 25px 20px;
+  }
+
+  .blogPostEditor {
+    // padding: 5px;
+    color: #cdd6f4;
+    $bg-color: #313244;
+
+    background: linear-gradient(57deg, #585b70, $bg-color);
+    font-size: 16px;
+    font-family: monospace;
+
+    textarea:focus {
+      outline: none;
+    }
+
+    // &:focus {
+    //   border: 1px solid #f5e0dc;
+    // }
+  }
+}
