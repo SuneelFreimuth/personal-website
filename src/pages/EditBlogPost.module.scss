@@ -15,16 +15,14 @@
     color: #cdd6f4;
     $bg-color: #313244;
 
-    background: linear-gradient(57deg, #585b70, $bg-color);
+    // background: linear-gradient(57deg, #585b70, $bg-color);
+    background-color: $bg-color;
     font-size: 16px;
     font-family: monospace;
 
     textarea:focus {
-      outline: none;
+      outline-color: #f5e0dc;
+      outline-style: dashed;
     }
-
-    // &:focus {
-    //   border: 1px solid #f5e0dc;
-    // }
   }
 }

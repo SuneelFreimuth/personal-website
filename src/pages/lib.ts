@@ -1,3 +1,7 @@
+export function isSome<T>(value: T): boolean {
+  return value !== null && value !== undefined;
+}
+
 export type Color = [number, number, number]
 
 export const random = (min: number, max: number): number =>
@@ -19,8 +23,8 @@ export const lerpColors = (t: number, c0: Color, c1: Color): Color =>
 export const colorFromHex = (color: string): Color => {
   if (color[0] === '#')
     color = color.substring(1);
-  if (color.length !== 3 && color.length !== 6)
-    throw new Error(`Invalid color ${color}, length without pound \`#\` prefix should be 3 or 6`);
+  assert(color.length === 3 || color.length === 6,
+    `Invalid color ${color}, length without pound \`#\` prefix should be 3 or 6`);
   return [
     parseInt(color.substring(0, 2), 16),
     parseInt(color.substring(2, 4), 16),

@@ -164,9 +164,8 @@ class ParagraphBlock extends Block {
 
         case RichTextKind.InlineMath:
           return (
-            <>
+            <span key={key}>
               <Tex
-                key={key}
                 className={styles.inlineMath}
                 math={`\\color{white}${content as string}`}
                 onClick={() => {
@@ -176,9 +175,13 @@ class ParagraphBlock extends Block {
                 data-tooltip-content='Copy Markup'
               />
               <StyledTooltip id={`tooltip${i}`}/>
-            </>
+            </span>
           );
+
+        case RichTextKind.InlinePreformatted:
+          return <code key={key}>{content as string}</code>;
       }
+      unreachable();
     })
     return <p>{rendered}</p>;
   }
@@ -208,25 +211,18 @@ export enum RichTextKind {
   Italic,
   Underline,
   InlineMath,
+  InlinePreformatted
 }
 
 export interface RichText {
   kind: RichTextKind,
-  rawText: string,
+  openDelim?: string,
+  closeDelim?: string,
   content: string | RichText[],
 }
 
-export interface RichText {
-  kind: RichTextKind,
-  value: RichTextValue
-}
-
-export type RichTextValue =
-  string
-
-
 function formatAsSExpr(richText: RichText[]): string {
-  const elems = richText.map(function formatElem({ kind, content }) {
+  const elems = richText.map(function formatElem({ kind, openDelim, closeDelim, content }) {
     switch (kind) {
       case RichTextKind.Plain:
         return `"${content as string}"`;
@@ -242,6 +238,9 @@ function formatAsSExpr(richText: RichText[]): string {
 
       case RichTextKind.InlineMath:
         return `(math ${content.map(formatElem).join(' ')})`;
+
+      case RichTextKind.InlinePreformatted:
+        return `(pre ${content.map(formatElem).join(' ')})`;
     }
   });
   return `(${elems.join(' ')})`;
@@ -254,6 +253,7 @@ export const parseRichText = (text: string): RichText[] => {
     let i = 0;
     while (i < tokens.length) {
       switch (tokens[i]) {
+        // Rich text that CAN enclose other rich text.
         case '*':
         case '**':
         case '_': {
@@ -270,19 +270,29 @@ export const parseRichText = (text: string): RichText[] => {
             ?? tokens.length;
           richText.push({
             kind,
-            rawText: tokens.slice(i, closing + 1).join(''),
-            content: recurse(tokens.slice(i + 1, closing))
+            openDelim: tokens[i],
+            closeDelim: closing < tokens.length ? tokens[i] : undefined,
+            content: recurse(tokens.slice(i + 1, closing)),
           });
           i = closing + 1;
           break;
         }
 
-        case '$': {
-          const closing = arrIndexOf(tokens, '$', i + 1) ?? tokens.length
+        // Rich text that CANNOT enclose other rich text.
+        case '$':
+        case '`': {
+          const kind =
+            tokens[i] === '$' ?
+              RichTextKind.InlineMath :
+            tokens[i] === '`' ?
+              RichTextKind.InlinePreformatted :
+              unreachable();
+          const closing = arrIndexOf(tokens, tokens[i], i + 1) ?? tokens.length
           richText.push({
-            kind: RichTextKind.InlineMath,
-            rawText: tokens.slice(i, closing + 1).join(''),
-            content: tokens.slice(i + 1, closing).join('')
+            kind,
+            openDelim: tokens[i],
+            closeDelim: closing < tokens.length ? tokens[i] : undefined,
+            content: tokens.slice(i + 1, closing).join(''),
           });
           i = closing + 1;
           break;
@@ -291,7 +301,6 @@ export const parseRichText = (text: string): RichText[] => {
         default:
           richText.push({
             kind: RichTextKind.Plain,
-            rawText: tokens[i],
             content: tokens[i]
           });
           i++;
@@ -301,11 +310,7 @@ export const parseRichText = (text: string): RichText[] => {
   })(tokens);
 }
 
-function unreachable(message='Reached unreachable statement.'): never {
-  throw new Error(message);
-}
-
-const DELIMITERS = new Set(['*', '**', '_', '$']);
+const DELIMITERS = new Set(['*', '**', '_', '$', '`']);
 
 const findClosingDelim = (tokens: string[], delim: string, startIndex: number = 0): number | null => {
   const openDelimStack = [delim];
@@ -338,11 +343,11 @@ export const tokenizeRichText = (text: string): string[] => {
     } else if (text.slice(i, i + 2) === '**') {
       tokens.push('**');
       i += 2;
-    } else if (['*', '$', '_'].includes(text[i])) {
+    } else if (['*', '$', '_', '`'].includes(text[i])) {
       tokens.push(text[i]);
       i++;
     } else {
-      const end = indexOfAny(text, ['*', '**', '$', '_'], i) ?? text.length;
+      const end = indexOfAny(text, ['*', '**', '$', '_', '`'], i) ?? text.length;
       tokens.push(text.slice(i, end));
       i = end;
     }
@@ -408,21 +413,6 @@ function arrIndexOf(arr: any[], elem: any, startIndex: number = 0): number | nul
   for (let i = startIndex; i < arr.length; i++)
     if (arr[i] === elem)
       return i;
-  return null;
-}
-
-function strIndexOf(str: string, seq: string, startIndex: number = 0): number | null {
-  for (let i = startIndex; i < str.length; i++) {
-    let found = true;
-    for (let j = 0; j < seq.length; j++) {
-      if (str[i + j] !== seq[j]) {
-        found = false;
-        break;
-      }
-    }
-    if (found)
-      return i;
-  }
   return null;
 }
 
@@ -525,16 +515,60 @@ class UnorderedListBlock extends Block {
   }
 }
 
-const WHITESPACE = '\u0009\u000A\u000C\u000D\u0020'
+interface UnorderedListItem {
+  content: string,
+  children: UnorderedListItem[]
+}
+
+const isLeaf = (item: UnorderedListItem): boolean =>
+  item.children.length === 0;
+
+function listToTree(lines: string[]): UnorderedListItem[] {
+  const parsedItems = lines.map(parseListItem);
+  return (function recurse(parsedItems: [number, string][]) {
+    const list: UnorderedListItem[] = [];
+    let i = 0;
+    while (i < parsedItems.length) {
+      const [indent, content] = parsedItems[i];
+      let j = i + 1;
+      while (j < parsedItems.length && parsedItems[j][0] > indent)
+        j++;
+      list.push({
+        content,
+        children: recurse(parsedItems.slice(i + 1, j))
+      });
+      i = j;
+    }
+    return list;
+  })(parsedItems);
+}
+
+const INDENT_SIZE = 2;
+
+const parseListItem = (line: string): [number, string] => {
+  let i = 0;
+  while (i < line.length && isWhitespace(line[i]))
+    i++;
+  assert(line[i] === '-');
+  return [Math.floor(i / INDENT_SIZE), line.slice(i + 1)];
+}
+
+const isWhitespace = (c: string) => {
+  if (c.length !== 1)
+    throw new Error('isWhitespace() must be called on a character, i.e. a string of length 1.');
+  return WHITESPACE.includes(c);
+}
+
+const WHITESPACE = '\u0009\u000A\u000C\u000D\u0020';
 
 function strip(str: string, unwanted: string) {
-  let start = 0
+  let start = 0;
   while (start < str.length && unwanted.includes(str[start]))
-    start++
-  let end = str.length
+    start++;
+  let end = str.length;
   while (end > 0 && unwanted.includes(str[end - 1]))
-    end--
-  return str.slice(start, end)
+    end--;
+  return str.slice(start, end);
 }
 
 export function collectBlocks(lines: Array<string>): Block[] {
