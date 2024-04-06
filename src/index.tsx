@@ -17,6 +17,7 @@ import { Home } from './pages/Home'
 import { Blog } from './pages/Blog'
 import { BlogPost, loader as blogPostLoader } from './pages/BlogPost'
 import { EditBlogPost } from './pages/EditBlogPost'
+import { Minesweeper } from './pages/Minesweeper'
 
 import './global.scss'
 
@@ -58,20 +59,24 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home/>
       },
-      {
-        path: "/blog",
-        element: <Blog/>
-      },
-      {
-        path: "/blog/:postId",
-        loader: blogPostLoader,
-        element: <BlogPost/>
-      },
-      {
-        path: "/edit-blog/:postId",
-        // loader: blogPostLoader,
-        element: <EditBlogPost/>
-      }
+      // {
+      //   path: "/minesweeper",
+      //   element: <Minesweeper/>
+      // },
+      // {
+      //   path: "/blog",
+      //   element: <Blog/>
+      // },
+      // {
+      //   path: "/blog/:postId",
+      //   loader: blogPostLoader,
+      //   element: <BlogPost/>
+      // },
+      // {
+      //   path: "/edit-blog/:postId",
+      //   // loader: blogPostLoader,
+      //   element: <EditBlogPost/>
+      // },
     ]
   },
 ]);

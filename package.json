@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html && cp resume.pdf dist"
+    "build": "./build.sh",
+    "deploy": "npm run build && firebase deploy"
   },
   "license": "MIT",
   "devDependencies": {
