@@ -14,6 +14,7 @@ import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
 
 import { Nav } from './pages/components/Nav'
 import { Home } from './pages/Home'
+import { ReadingList } from './pages/ReadingList'
 import { Blog } from './pages/Blog'
 import { BlogPost, loader as blogPostLoader } from './pages/BlogPost'
 import { EditBlogPost } from './pages/EditBlogPost'
@@ -40,12 +41,10 @@ window.unreachable = (message='Reached unreachable statement.'): never => {
 };
 
 
-export function App() {
-  const atHome = useMatch("/") !== null;
-
+export function NavLayout() {
   return (
     <>
-      <Nav maximized={atHome}/>
+      <Nav/>
       <Outlet />
     </>
   )
@@ -53,32 +52,18 @@ export function App() {
 
 const router = createBrowserRouter([
   {
-    element: <App/>,
+    path: "/",
+    element: <Home/>,
+  },
+  {
+    element: <NavLayout/>,
     children: [
       {
-        path: "/",
-        element: <Home/>
-      },
-      // {
-      //   path: "/minesweeper",
-      //   element: <Minesweeper/>
-      // },
-      // {
-      //   path: "/blog",
-      //   element: <Blog/>
-      // },
-      // {
-      //   path: "/blog/:postId",
-      //   loader: blogPostLoader,
-      //   element: <BlogPost/>
-      // },
-      // {
-      //   path: "/edit-blog/:postId",
-      //   // loader: blogPostLoader,
-      //   element: <EditBlogPost/>
-      // },
+        path: '/reading',
+        element: <ReadingList/>
+      }
     ]
-  },
+  }
 ]);
 
 createRoot(document.getElementById('app')).render(

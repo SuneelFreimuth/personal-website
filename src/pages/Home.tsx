@@ -1,21 +1,37 @@
-import { useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 
 import { Color, randomHsl, random, lerp, hslToRgb, rgbString as rgbString, lerpColors, map } from './lib'
 
 import styles from './Home.module.scss'
+import navStyles from './components/Nav.module.scss'
 import { AnimatedBackground } from './components/AnimatedBackground';
 
+const GITHUB_LOGO = new URL('../assets/github-icon.svg', import.meta.url);
+const CURRENT_BOOK = 'new-spring'
+
 export function Home() {
-  // <App/> maximizes <Nav/> for /home.
   return (
     <div className={styles.home}>
       <TreeAnimation />
+      <h1>Suneel Freimuth</h1>
+      <div>
+        <Link to="/reading" className={navStyles.glassButton}>
+          <span><span style={{ zIndex: 3 }}>📚</span> Reading</span>
+        </Link>
+        <a href="https://github.com/SuneelFreimuth" className={navStyles.glassButton}>
+          <span>
+            <img src={GITHUB_LOGO.toString()} alt="Github logo" />
+            Github
+          </span>
+        </a>
+        <a href="/resume.pdf" className={navStyles.glassButton}><span>Resume</span></a>
+      </div>
     </div>
   )
 }
 
 function TreeAnimation() {
-  const randomGoodHsl = (): Color => randomHsl([0, 0.7, 0.45], [359, 1, 0.8]);
+  const randomPrettyColorHsl = (): Color => randomHsl([0, 0.7, 0.45], [359, 1, 0.8]);
 
   interface TreeConfig {
     maxDepth: number,
@@ -31,7 +47,7 @@ function TreeAnimation() {
   }
 
   const randomTreeConfig = (canvasWidth: number, canvasHeight: number): TreeConfig => {
-    const colorTipHsl = randomGoodHsl()
+    const colorTipHsl = randomPrettyColorHsl()
     const colorBaseHsl: Color = [
       colorTipHsl[0] + (Math.random() < 0.5 ? 1 : -1) * random(60, 80),
       colorTipHsl[1] - 0.3 * Math.random(),

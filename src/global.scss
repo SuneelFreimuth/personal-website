@@ -4,8 +4,13 @@ $font-sans-serif: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  &::selection {
+    background: #b4befeAA;
+  }
 }
 
 body {
-  background-color: #11111b;
+  background-color: #1e1e2e;
+  // background-color: #11111b;
 }

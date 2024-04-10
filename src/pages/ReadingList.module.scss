@@ -1,0 +1,118 @@
+@use "../global.scss" as *;
+
+.readingList {
+  margin-top: 100px;
+  font-family: $font-sans-serif;
+  color: white;
+  margin: 100px 15vw;
+
+  @media (max-width: 775px) {
+    margin: 100px 50px;
+  }
+
+  h1 {
+    font-weight: lighter;
+    font-size: 4rem;
+    margin-bottom: 10px;
+  }
+
+  > p {
+    margin: 20px 0;
+  }
+
+  section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 30px;
+
+    @media (max-width: 775px) {
+      grid-template-columns: 1fr;
+    }
+
+    .bookEntry {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+
+      img {
+        height: 300px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+        transform: perspective(1000px) rotateY(15deg);
+        box-shadow: -2px 3px 10px #030307;
+
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0px 5px 17px #000;
+        }
+      }
+
+      > div {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        h4 {
+          font-weight: lighter;
+          text-transform: uppercase;
+        }
+
+        h3 {
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+
+        p {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+}
+
+.focusedImage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: fadeIn 0.2s;
+  background-color: #000B;
+  backdrop-filter: blur(2px);
+
+  img {
+    max-height: 90vh;
+  }
+
+  button {
+    position: fixed;
+    top: 15px;
+    right: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    img {
+      transition: filter 0.1s;
+      filter: invert(100%);
+
+      &:hover {
+        filter: invert(70%);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opactity: 1;
+  }
+}
