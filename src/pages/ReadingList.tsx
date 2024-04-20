@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { books, Book } from './books'
+import { books, Book, BookState } from './books'
 import { Chip } from './components/Chip'
 
 import styles from './ReadingList.module.scss'
@@ -38,7 +38,7 @@ export function ReadingList() {
 }
 
 function BookEntry({ book, onCoverClick }: { book: Book, onCoverClick: Function }) {
-  const { title, author, description, image, inProgress } = book
+  const { title, author, description, image, state } = book
   return (
     <div className={styles.bookEntry}>
       <img
@@ -54,7 +54,16 @@ function BookEntry({ book, onCoverClick }: { book: Book, onCoverClick: Function 
         <h3>{title}</h3>
         <p dangerouslySetInnerHTML={{ __html: description }}/>
         <div>
-          {inProgress ? <Chip>In Progress</Chip> : null}
+          {(() => {
+            switch (state) {
+              case BookState.Todo:
+                return <Chip color='#7f849c'>Todo</Chip>
+              case BookState.InProgress:
+                return <Chip color='#89b4fa'>In Progress</Chip>
+              default:
+                return null
+            }
+          })()}
         </div>
       </div>
     </div>
