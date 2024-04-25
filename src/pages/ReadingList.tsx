@@ -40,7 +40,10 @@ export function ReadingList() {
 function BookEntry({ book, onCoverClick }: { book: Book, onCoverClick: Function }) {
   const { title, author, description, image, state } = book
   return (
-    <div className={styles.bookEntry}>
+    <div className={
+      styles.bookEntry + ' ' +
+      (state === BookState.InProgress ? styles.inProgress : '')
+    }>
       <img
         src={image.href}
         alt={`Cover of the book ${title} by ${author}`}

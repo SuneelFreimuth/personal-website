@@ -4,7 +4,7 @@
   margin-top: 100px;
   font-family: $font-sans-serif;
   color: white;
-  margin: 100px 15vw;
+  margin: 100px 10vw;
 
   @media (max-width: 775px) {
     margin: 100px 50px;
@@ -20,10 +20,11 @@
     margin: 20px 0;
   }
 
-  section {
+  .books {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 30px;
+    gap: 24px 16px;
+    margin-top: 40px;
 
     @media (max-width: 775px) {
       grid-template-columns: 1fr;
@@ -32,10 +33,16 @@
     .bookEntry {
       display: grid;
       grid-template-columns: auto 1fr;
-      gap: 10px;
+      gap: 15px;
+      padding: 24px 32px;
+
+      &.inProgress {
+        background-color: #313244;
+        border-radius: 10px;
+      }
 
       img {
-        height: 300px;
+        height: 250px;
         transition: transform 0.2s, box-shadow 0.2s;
         cursor: pointer;
         transform: perspective(1000px) rotateY(15deg);

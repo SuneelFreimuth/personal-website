@@ -27,7 +27,7 @@ export const books: Book[] = [
         title: 'The Great Hunt',
         author: 'Robert Jordan',
         description: 'The second book of <em>The Wheel of Time</em>.',
-        image: new URL('../assets/book-covers/the-great-hunt.png', import.meta.url),
+        image: new URL('../assets/book-covers/the-great-hunt.jpeg', import.meta.url),
         state: S.Done
     },
     {
@@ -129,13 +129,6 @@ export const books: Book[] = [
         state: S.Done
     },
     {
-        title: 'Mistborn',
-        author: 'Brandon Sanderson',
-        description: 'First book of <em>Mistborn</em>.',
-        image: new URL('../assets/book-covers/mistborn.avif', import.meta.url),
-        state: S.InProgress
-    },
-    {
         title: 'Game of Thrones',
         author: 'George R. R. Martin',
         description: 'First book of <em>A Song of Ice and Fire</em>.',
@@ -148,5 +141,12 @@ export const books: Book[] = [
         description: 'Second book of <em>Dune</em>.',
         image: new URL('../assets/book-covers/dune-messiah.jpeg', import.meta.url),
         state: S.Todo
+    },
+    {
+        title: 'Mistborn',
+        author: 'Brandon Sanderson',
+        description: 'First book of <em>Mistborn</em>.',
+        image: new URL('../assets/book-covers/mistborn.avif', import.meta.url),
+        state: S.InProgress
     },
 ]
