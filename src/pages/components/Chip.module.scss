@@ -13,4 +13,9 @@
   font-size: 0.7rem;
   border-radius: $height / 2;
   letter-spacing: 1px;
+  gap: 5px;
+
+  img {
+    height: 20px;
+  }
 }

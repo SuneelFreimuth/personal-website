@@ -14,3 +14,16 @@ body {
   background-color: #1e1e2e;
   // background-color: #11111b;
 }
+
+a {
+  color: #cba6f7;
+
+  &:active {
+    color: darken(#cba6f7, 20%);
+  }
+}
+
+.brushedGold {
+  // background: image("./assets/brushed-gold.jpg");
+  // background-position: 100% 100%;
+}

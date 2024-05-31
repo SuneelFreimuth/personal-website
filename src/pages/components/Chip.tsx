@@ -1,7 +1,17 @@
 import styles from './Chip.module.scss'
 
-export function Chip({ children, color }: { children: string, color: string }) {
+export function Chip({ children, color, ...rest }: any) {
+  const style = { ...rest.style };
+  if (color !== undefined)
+    style.backgroundColor = color;
+
   return (
-    <span className={styles.chip} style={{ backgroundColor: color }}>{children}</span>
+    <span
+      {...rest}
+      className={styles.chip + ' ' + rest.className}
+      style={{ ...style }}
+    >
+      {children}
+    </span>
   )
 }

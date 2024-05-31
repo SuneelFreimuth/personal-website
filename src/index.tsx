@@ -14,7 +14,7 @@ import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
 
 import { Nav } from './pages/components/Nav'
 import { Home } from './pages/Home'
-import { ReadingList } from './pages/ReadingList'
+import { ReadingList, readingListLoader } from './pages/ReadingList'
 import { Blog } from './pages/Blog'
 import { BlogPost, loader as blogPostLoader } from './pages/BlogPost'
 import { EditBlogPost } from './pages/EditBlogPost'
@@ -58,10 +58,14 @@ const router = createBrowserRouter([
   {
     element: <NavLayout/>,
     children: [
+      // {
+      //   path: '/minesweeper',
+      //   element: <Minesweeper/>
+      // },
       {
         path: '/reading',
-        element: <ReadingList/>
-      }
+        element: <ReadingList/>,
+      },
     ]
   }
 ]);
