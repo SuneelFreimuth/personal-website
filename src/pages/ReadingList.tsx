@@ -197,7 +197,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
             alt="Wheel of Time Logo"
             style={{ filter: 'invert(0%)' }}
           />
-          <span>Wheel of Time</span>
+          <span>The Wheel of Time</span>
         </Chip>
       )
 
