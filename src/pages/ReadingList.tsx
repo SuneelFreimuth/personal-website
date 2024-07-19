@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-import { books, Book, BookState, Series } from './books'
-import { Chip } from './components/Chip'
+import { books, Book, BookState, Series } from './books';
+import { Chip } from './components/Chip';
 
-import styles from './ReadingList.module.scss'
-import { useSearchParams } from 'react-router-dom'
-import catppuccin from '../catppuccin'
+import styles from './ReadingList.module.scss';
+import { useSearchParams } from 'react-router-dom';
+import catppuccin from '../catppuccin';
 
 const icons = {
   close: new URL('../assets/close-icon.png?width=100', import.meta.url),
@@ -13,36 +13,40 @@ const icons = {
   atium: new URL('../assets/atium.png?width=100', import.meta.url),
   wheelOfTime: new URL('../assets/wheel-of-time.webp?width=100', import.meta.url),
   iceAndFire: new URL('../assets/house-stark-sigil.png?width=100', import.meta.url),
-}
+  stormlightArchive: new URL('../assets/stormlight-archive.svg', import.meta.url),
+};
 
-const brushedGoldPattern = new URL('../assets/brushed-gold.jpg', import.meta.url)
+const brushedGoldPattern = new URL('../assets/shiny-gold.jpg', import.meta.url);
 
 const SERIES_ID = {
   [Series.Dune]: 'dune',
   [Series.Mistborn]: 'mistborn',
   [Series.WheelOfTime]: 'wheel-of-time',
   [Series.IceAndFire]: 'ice-and-fire',
-}
+  [Series.StormlightArchive]: 'stormlight-archive',
+};
 
 const SERIES_FROM_ID = {
   'dune': Series.Dune,
   'mistborn': Series.Mistborn,
   'wheel-of-time': Series.WheelOfTime,
   'ice-and-fire': Series.IceAndFire,
-}
+  'stormlight-archive': Series.IceAndFire,
+};
 
 const SERIES_TITLE = {
   [Series.Dune]: 'Dune',
   [Series.Mistborn]: 'Mistborn',
   [Series.WheelOfTime]: 'The Wheel of Time',
   [Series.IceAndFire]: 'A Song of Ice and Fire',
-}
+  [Series.StormlightArchive]: 'The Stormlight Archive',
+};
 
 const BOOK_STATE_PRIORITY = {
   [BookState.Done]: 0,
   [BookState.Todo]: 1,
   [BookState.InProgress]: 2,
-}
+};
 
 const comparePriority = (a: Book, b: Book): number =>
   BOOK_STATE_PRIORITY[a.state] < BOOK_STATE_PRIORITY[b.state] ?
@@ -83,7 +87,11 @@ export function ReadingList() {
           >
             <img
               src={icons.seriesBackButton.href}
-              style={{ filter: 'invert(100%)' }}
+              style={{
+                filter: 'invert(100%)',
+                width: '20px',
+                height: '20px',
+              }}
             />
             <p>All</p>
           </div>
@@ -124,7 +132,7 @@ function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
   onCoverClick: Function,
   onSeriesChipClick: Function,
 }) {
-  const { title, author, description, image, state, series } = book
+  const { title, author, description, image, state, series } = book;
   return (
     <div className={
       styles.bookEntry + ' ' +
@@ -154,12 +162,12 @@ function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function StateChip({ state }: { state: BookState }) {
-  let color: string
-  let label: string
+  let color: string;
+  let label: string;
   switch (state) {
     case BookState.Todo:
       color = '#7f849c'
@@ -170,9 +178,9 @@ function StateChip({ state }: { state: BookState }) {
       label = 'In Progress'
       break;
     default:
-      return null
+      return null;
   }
-  return <Chip color={color}>{label}</Chip>
+  return <Chip color={color}>{label}</Chip>;
 }
 
 function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) {
@@ -180,16 +188,15 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
     case Series.WheelOfTime:
       return (
         <Chip
-          className={styles.brushedGold}
           onClick={onClick}
           style={{
             cursor: 'pointer',
             background: `url(${brushedGoldPattern.href})`,
-            backgroundPosition: 'right',
+            backgroundPosition: 'left',
             backgroundSize: '110%',
             fontWeight: 'bold',
             color: 'black',
-            boxShadow: '0px 1px 5px',
+            boxShadow: '0px 1px 5px black',
           }}
         >
           <img
@@ -199,7 +206,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
           />
           <span>The Wheel of Time</span>
         </Chip>
-      )
+      );
 
     case Series.Dune:
       return (
@@ -210,7 +217,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
         >
           <span>Dune</span>
         </Chip>
-      )
+      );
 
     case Series.Mistborn:
       return (
@@ -226,7 +233,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
           />
           <span>Mistborn</span>
         </Chip>
-      )
+      );
 
     case Series.IceAndFire:
       return (
@@ -244,7 +251,25 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
           />
           <span>A Song of Ice and Fire</span>
         </Chip>
-      )
+      );
+
+    case Series.StormlightArchive:
+      return (
+        <Chip
+          color='#515966'
+          onClick={onClick}
+          style={{ cursor: 'pointer' }}
+        >
+          <img
+            src={icons.stormlightArchive}
+            alt="Logo for The Stormlight Archive by Brandon Sanderson"
+            style={{
+              filter: 'invert(100%)',
+            }}
+          />
+          <span>The Stormlight Archive</span>
+        </Chip>
+      );
   }
 }
 
@@ -253,11 +278,11 @@ function FocusedImage({ image, onClose }: { image: URL, onClose: Function }) {
     <div className={styles.focusedImage} onClick={e => {
       if (e.target !== e.currentTarget)
         return;
-      onClose()
+      onClose();
     }}>
       <img src={image.href}/>
       <button onClick={() => {
-        onClose()
+        onClose();
       }}>
         <img src={icons.close.href}/>
       </button>

@@ -48,16 +48,17 @@
       > img {
         position: relative;
         height: 250px;
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition: transform 0.2s, filter 0.2s;
         cursor: pointer;
         transform: perspective(1000px) rotateY(15deg);
         // box-shadow: -2px 3px 10px #030307;
-        filter: drop-shadow(-2px 3px 10px #030307);
+        $shadow-color: #030307;
+        filter: drop-shadow(-2px 3px 10px $shadow-color);
 
         &:hover {
           transform: scale(1.05);
           // box-shadow: 0px 5px 17px #000;
-          filter: drop-shadow(0px 5px 17px #000);
+          filter: drop-shadow(-3px 5px 14px $shadow-color);
         }
       }
 
@@ -111,7 +112,7 @@
 
   button {
     position: fixed;
-    top: 15px;
+    top: 75px;
     right: 30px;
     background: none;
     border: none;
@@ -120,6 +121,8 @@
     img {
       transition: filter 0.1s;
       filter: invert(100%);
+      width: 30px;
+      height: 30px;
 
       &:hover {
         filter: invert(70%);

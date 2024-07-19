@@ -10,7 +10,8 @@ export enum Series {
     Mistborn,
     WheelOfTime,
     Dune,
-    IceAndFire
+    IceAndFire,
+    StormlightArchive,
 }
 
 export interface Book {
@@ -197,6 +198,28 @@ export const books: Book[] = [
         author: 'Brandon Sanderson',
         description: '',
         image: new URL('../assets/book-covers/warbreaker.jpeg', import.meta.url),
+        state: S.Done,
+    },
+    {
+        title: 'Elantris',
+        author: 'Brandon Sanderson',
+        description: '',
+        image: new URL('../assets/book-covers/elantris.jpg', import.meta.url),
+        state: S.Done,
+    },
+    {
+        title: 'The Way of Kings',
+        author: 'Brandon Sanderson',
+        description: 'First book of <em>The Stormlight Archive</em>.',
+        image: new URL('../assets/book-covers/the-way-of-kings.jpg', import.meta.url),
+        series: Series.StormlightArchive,
+        state: S.Done,
+    },
+    {
+        title: 'Hyperion',
+        author: 'Dan Simmons',
+        description: '',
+        image: new URL('../assets/book-covers/hyperion.jpg', import.meta.url),
         state: S.InProgress,
     },
 ]

@@ -14,11 +14,7 @@ import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
 
 import { Nav } from './pages/components/Nav'
 import { Home } from './pages/Home'
-import { ReadingList, readingListLoader } from './pages/ReadingList'
-import { Blog } from './pages/Blog'
-import { BlogPost, loader as blogPostLoader } from './pages/BlogPost'
-import { EditBlogPost } from './pages/EditBlogPost'
-import { Minesweeper } from './pages/Minesweeper'
+import { ReadingList } from './pages/ReadingList'
 
 import './global.scss'
 
@@ -58,19 +54,19 @@ const router = createBrowserRouter([
   {
     element: <NavLayout/>,
     children: [
-      // {
-      //   path: '/minesweeper',
-      //   element: <Minesweeper/>
-      // },
       {
         path: '/reading',
+        element: <ReadingList/>,
+      },
+      {
+        path: '/books',
         element: <ReadingList/>,
       },
     ]
   }
 ]);
 
-createRoot(document.getElementById('app')).render(
+createRoot(document.getElementById('app')!).render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>
