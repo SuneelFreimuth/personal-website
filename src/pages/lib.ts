@@ -2,6 +2,18 @@ export function isSome<T>(value: T): boolean {
   return value !== null && value !== undefined;
 }
 
+
+export const cn = (...classes: (string | null | undefined)[]): string =>
+  classes
+    .filter(isSome)
+    .join(' ')
+
+export const cnWhen = (condition: boolean, classTrue: string, classFalse?: string) =>
+  condition ?
+    classTrue :
+    classFalse;
+
+
 export type Color = [number, number, number]
 
 export const random = (min: number, max: number): number =>
