@@ -3,8 +3,8 @@ import { NavLink, Link } from 'react-router-dom'
 
 import styles from './Nav.module.scss'
 
-const GITHUB_LOGO = new URL('../../assets/github-icon.svg', import.meta.url);
-const HAMBURGER_ICON = new URL('../../assets/hamburger-icon.png', import.meta.url)
+import { icons } from '../../assets'
+
 const MOBILE_THRESHOLD = '775px'
 
 export function Nav() {
@@ -22,7 +22,7 @@ function DesktopNav() {
         </Link>
         <a href="https://github.com/SuneelFreimuth" className={styles.glassButton}>
           <span>
-            <img src={GITHUB_LOGO.toString()} alt="Github logo" />
+            <img src={icons.github.href} alt="Github logo" />
             Github
           </span>
         </a>
@@ -41,7 +41,7 @@ function MobileNav() {
     <div className={styles.mobileNav}>
       <h1><NavLinkStyled to="/" end>Suneel Freimuth</NavLinkStyled></h1>
       <img
-        src={HAMBURGER_ICON.href}
+        src={icons.hamburgerMenu.href}
         onClick={() => {
           setMenuOpen(true)
         }}

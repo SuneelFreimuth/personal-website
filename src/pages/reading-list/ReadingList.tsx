@@ -1,22 +1,13 @@
 import { useState } from 'react';
 
 import { books, Book, BookState, Series } from './books';
-import { Chip } from './components/Chip';
+import { Chip } from '../components/Chip';
 
 import styles from './ReadingList.module.scss';
 import { useSearchParams } from 'react-router-dom';
-import catppuccin from '../catppuccin';
+import catppuccin from '../../catppuccin';
+import { icons, patterns } from '../../assets'
 
-const icons = {
-  close: new URL('../assets/close-icon.png?width=100', import.meta.url),
-  seriesBackButton: new URL('../assets/back-button.png?width=100', import.meta.url),
-  atium: new URL('../assets/atium.png?width=100', import.meta.url),
-  wheelOfTime: new URL('../assets/wheel-of-time.webp?width=100', import.meta.url),
-  iceAndFire: new URL('../assets/house-stark-sigil.png?width=100', import.meta.url),
-  stormlightArchive: new URL('../assets/stormlight-archive.svg', import.meta.url),
-};
-
-const brushedGoldPattern = new URL('../assets/shiny-gold.jpg', import.meta.url);
 
 const SERIES_ID = {
   [Series.Dune]: 'dune',
@@ -42,6 +33,7 @@ const SERIES_TITLE = {
   [Series.StormlightArchive]: 'The Stormlight Archive',
 };
 
+
 const BOOK_STATE_PRIORITY = {
   [BookState.Done]: 0,
   [BookState.Todo]: 1,
@@ -54,6 +46,7 @@ const comparePriority = (a: Book, b: Book): number =>
   BOOK_STATE_PRIORITY[a.state] === BOOK_STATE_PRIORITY[b.state] ?
     0 :
     1;
+
 
 export function ReadingList() {
   const [focusedImage, setFocusedImage] = useState(null)
@@ -86,7 +79,7 @@ export function ReadingList() {
             }}
           >
             <img
-              src={icons.seriesBackButton.href}
+              src={icons.back.href}
               style={{
                 filter: 'invert(100%)',
                 width: '20px',
@@ -191,7 +184,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
           onClick={onClick}
           style={{
             cursor: 'pointer',
-            background: `url(${brushedGoldPattern.href})`,
+            background: `url(${patterns.shinyGold.href})`,
             backgroundPosition: 'left',
             backgroundSize: '110%',
             fontWeight: 'bold',
@@ -261,7 +254,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
           style={{ cursor: 'pointer' }}
         >
           <img
-            src={icons.stormlightArchive}
+            src={icons.stormlightArchive.href}
             alt="Logo for The Stormlight Archive by Brandon Sanderson"
             style={{
               filter: 'invert(100%)',

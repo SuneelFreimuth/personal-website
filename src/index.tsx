@@ -13,8 +13,8 @@ import 'katex/dist/katex.min.css'
 import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
 
 import { Nav } from './pages/components/Nav'
-import { Home } from './pages/Home'
-import { ReadingList } from './pages/ReadingList'
+import { Home } from './pages/home/Home'
+import { ReadingList } from './pages/reading-list/ReadingList'
 
 import './global.scss'
 

@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import { Color, randomHsl, random, lerp, hslToRgb, rgbString as rgbString, lerpColors, map } from './lib'
+import { Color, randomHsl, random, lerp, hslToRgb, rgbString as rgbString, lerpColors, map } from '../lib'
 
 import styles from './Home.module.scss'
-import navStyles from './components/Nav.module.scss'
-import { AnimatedBackground } from './components/AnimatedBackground';
+import navStyles from '../components/Nav.module.scss'
+import { AnimatedBackground } from '../components/AnimatedBackground';
+import { icons } from '../../assets';
 
-const GITHUB_LOGO = new URL('../assets/github-icon.svg', import.meta.url);
-const CURRENT_BOOK = 'new-spring'
 
 export function Home() {
   return (
@@ -20,7 +19,7 @@ export function Home() {
         </Link>
         <a href="https://github.com/SuneelFreimuth" className={navStyles.glassButton}>
           <span>
-            <img src={GITHUB_LOGO.toString()} alt="Github logo" />
+            <img src={icons.github.href} alt="Github logo" />
             Github
           </span>
         </a>
@@ -29,6 +28,7 @@ export function Home() {
     </div>
   )
 }
+
 
 function TreeAnimation() {
   const randomPrettyColorHsl = (): Color => randomHsl([0, 0.7, 0.45], [359, 1, 0.8]);
