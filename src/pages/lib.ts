@@ -6,12 +6,18 @@ export function isSome<T>(value: T): boolean {
 export const cn = (...classes: (string | null | undefined)[]): string =>
   classes
     .filter(isSome)
-    .join(' ')
+    .join(' ');
 
 export const cnWhen = (condition: boolean, classTrue: string, classFalse?: string) =>
   condition ?
     classTrue :
     classFalse;
+
+
+export const when = (cond: boolean, element: JSX.Element): JSX.Element | null =>
+  cond ?
+    element :
+    null;
 
 
 export type Color = [number, number, number]

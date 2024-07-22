@@ -1,5 +1,6 @@
 @use "../../global.scss" as *;
 
+
 .readingList {
   margin-top: 100px;
   font-family: $font-sans-serif;
@@ -23,6 +24,21 @@
   > p {
     margin: 20px 0;
   }
+              
+  .seriesHeader {
+    display: inline-flex;
+    padding: 5px 2px;
+    align-items: center;
+    margin-bottom: 5px;
+    gap: 5px;
+    cursor: pointer;
+
+    span {
+      text-transform: capitalize;
+      font-weight: lighter;
+      font-size: 20px;
+    }
+  }
 
   .books {
     display: grid;
@@ -33,63 +49,63 @@
     @media (max-width: 775px) {
       grid-template-columns: 1fr;
     }
+  }
+}
 
-    .bookEntry {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 15px;
-      padding: 24px 32px;
 
-      &.inProgress {
-        background-color: #313244;
-        border-radius: 10px;
-      }
+.bookEntry {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 15px;
+  padding: 24px 32px;
 
-      > img {
-        position: relative;
-        height: 250px;
-        transition: transform 0.2s, filter 0.2s;
-        cursor: pointer;
-        transform: perspective(1000px) rotateY(15deg);
-        // box-shadow: -2px 3px 10px #030307;
-        $shadow-color: #030307;
-        filter: drop-shadow(-2px 3px 10px $shadow-color);
+  &.inProgress {
+    background-color: #313244;
+    border-radius: 10px;
+  }
 
-        &:hover {
-          transform: scale(1.05);
-          // box-shadow: 0px 5px 17px #000;
-          filter: drop-shadow(-3px 5px 14px $shadow-color);
-        }
-      }
+  > img {
+    position: relative;
+    height: 250px;
+    transition: transform 0.2s, filter 0.2s;
+    cursor: pointer;
+    transform: perspective(1000px) rotateY(15deg) rotateX(3deg);
+    $shadow-color: #030307;
+    filter: drop-shadow(-2px 3px 10px $shadow-color);
 
-      > div {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
+    &:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(-3px 5px 14px $shadow-color);
+    }
+  }
 
-        h4 {
-          font-weight: lighter;
-          text-transform: uppercase;
-        }
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
-        h3 {
-          font-size: 1.5rem;
-          font-weight: bold;
-        }
+    h4 {
+      font-weight: lighter;
+      text-transform: uppercase;
+    }
 
-        p {
-          margin-bottom: 5px;
-        }
+    h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
 
-        .chips {
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-      }
+    p {
+      margin-bottom: 5px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
   }
 }
+
 
 .focusedImage {
   position: fixed;
@@ -111,9 +127,9 @@
   }
 
   button {
-    position: fixed;
+    position: absolute;
     top: 75px;
-    right: 30px;
+    left: 30px;
     background: none;
     border: none;
     cursor: pointer;
@@ -128,14 +144,5 @@
         filter: invert(70%);
       }
     }
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opactity: 1;
   }
 }

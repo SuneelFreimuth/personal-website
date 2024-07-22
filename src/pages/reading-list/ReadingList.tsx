@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { books, Book, BookState, Series } from './books';
 import { Chip } from '../components/Chip';
-
 import styles from './ReadingList.module.scss';
-import { useSearchParams } from 'react-router-dom';
 import catppuccin from '../../catppuccin';
 import { icons, patterns } from '../../assets'
+import { isSome, cn, cnWhen, when } from '../lib';
+import { Fade } from '../components/Fade';
 
 
 const SERIES_ID = {
@@ -49,31 +50,27 @@ const comparePriority = (a: Book, b: Book): number =>
 
 
 export function ReadingList() {
-  const [focusedImage, setFocusedImage] = useState(null)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [focusedImage, setFocusedImage] = useState(null as URL | null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedSeries = SERIES_FROM_ID[searchParams.get('series')!];
 
-  const filteredBooks =
-    selectedSeries !== undefined ?
+  const books_ =
+    isSome(selectedSeries) ?
       books.filter(({ series }) => series === selectedSeries) :
-      books.sort(comparePriority);
+      books
+        .sort(comparePriority)
+        .toReversed();
 
   return (
     <div className={styles.readingList}>
       <h1>Reading List</h1>
       <p>Books I'm reading and books I've read.</p>
-      {selectedSeries !== undefined
-        ? <>
+      {when(
+        isSome(selectedSeries),
+        <>
           <div
-            style={{
-              display: 'inline-flex',
-              padding: '5px 2px',
-              alignItems: 'center',
-              marginBottom: '5px',
-              gap: '5px',
-              cursor: 'pointer',
-            }}
+            className={styles.seriesHeader}
             onClick={() => {
               setSearchParams({})
             }}
@@ -86,36 +83,34 @@ export function ReadingList() {
                 height: '20px',
               }}
             />
-            <p>All</p>
+            <span>ALL</span>
           </div>
           <h2>{SERIES_TITLE[selectedSeries]}</h2>
         </>
-        : null
-      }
+      )}
       <section className={styles.books}>
-        {filteredBooks.toReversed().map((book, i) => (
+        {books_.map((book, i) => (
           <BookEntry
             key={`book${i}`}
             book={book}
-            onCoverClick={image => {
-              setFocusedImage(image)
+            onCoverClick={() => {
+              setFocusedImage(book.image);
             }}
-            onSeriesChipClick={(series: Series) => {
-              const seriesId = SERIES_ID[series];
-              setSearchParams({ series: seriesId })
+            onSeriesChipClick={() => {
+              const seriesId = SERIES_ID[book.series];
+              setSearchParams({ series: seriesId });
             }}
           />
         ))}
       </section>
-      {focusedImage !== null
-        ? <FocusedImage
-          image={focusedImage}
+      <Fade revealWhen={isSome(focusedImage)}>
+        <FocusedImage
+          image={focusedImage!}
           onClose={() => {
-            setFocusedImage(null)
+            setFocusedImage(null);
           }}
         />
-        : null
-      }
+      </Fade>
     </div>
   )
 }
@@ -127,17 +122,15 @@ function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
 }) {
   const { title, author, description, image, state, series } = book;
   return (
-    <div className={
-      styles.bookEntry + ' ' +
-      (state === BookState.InProgress ? styles.inProgress : '')
-    }>
+    <div className={cn(
+      styles.bookEntry,
+      cnWhen(state === BookState.InProgress, styles.inProgress),
+    )}>
       <img
         src={image.href}
         alt={`Cover of the book ${title} by ${author}`}
         aria-label={`Cover of the book ${title} by ${author}`}
-        onClick={() => {
-          onCoverClick(image)
-        }}
+        onClick={onCoverClick}
       />
       <div>
         <h4>{author}</h4>
@@ -145,13 +138,13 @@ function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
         <p dangerouslySetInnerHTML={{ __html: description }}/>
         <div className={styles.chips}>
           <StateChip state={state}/>
-          {series !== null ?
+          {when(
+            isSome(series),
             <SeriesChip
               series={series}
-              onClick={() => onSeriesChipClick(series)}
-            /> :
-            null
-          }
+              onClick={onSeriesChipClick}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -163,12 +156,12 @@ function StateChip({ state }: { state: BookState }) {
   let label: string;
   switch (state) {
     case BookState.Todo:
-      color = '#7f849c'
-      label = 'Todo'
+      color = '#7f849c';
+      label = 'Todo';
       break;
     case BookState.InProgress:
-      color = '#89b4fa'
-      label = 'In Progress'
+      color = '#89b4fa';
+      label = 'In Progress';
       break;
     default:
       return null;
@@ -222,7 +215,6 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
           <img
             src={icons.atium.href}
             alt="Symbol for Atium, fictional metal from Mistborn by Brandon Sanderson"
-            style={{}}
           />
           <span>Mistborn</span>
         </Chip>
@@ -266,19 +258,36 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
   }
 }
 
-function FocusedImage({ image, onClose }: { image: URL, onClose: Function }) {
+function FocusedImage({ className, image, onClose }: {
+  className?: string,
+  image: URL,
+  onClose: Function,
+}) {
+  const [image_, setImage_] = useState(image);
+
+  useEffect(() => {
+    if (image !== null)
+      setImage_(image);
+  }, [image]);
+
   return (
-    <div className={styles.focusedImage} onClick={e => {
-      if (e.target !== e.currentTarget)
-        return;
-      onClose();
-    }}>
-      <img src={image.href}/>
+    <div
+      className={cn(
+        styles.focusedImage,
+        className
+      )}
+      onClick={e => {
+        if (e.target !== e.currentTarget)
+          return;
+        onClose();
+      }}
+    >
+      <img src={image_?.href}/>
       <button onClick={() => {
         onClose();
       }}>
         <img src={icons.close.href}/>
       </button>
     </div>
-  )
+  );
 }
