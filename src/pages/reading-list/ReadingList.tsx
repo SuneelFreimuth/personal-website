@@ -272,10 +272,7 @@ function FocusedImage({ className, image, onClose }: {
 
   return (
     <div
-      className={cn(
-        styles.focusedImage,
-        className
-      )}
+      className={cn(styles.focusedImage, className)}
       onClick={e => {
         if (e.target !== e.currentTarget)
           return;
@@ -283,9 +280,7 @@ function FocusedImage({ className, image, onClose }: {
       }}
     >
       <img src={image_?.href}/>
-      <button onClick={() => {
-        onClose();
-      }}>
+      <button onClick={onClose}>
         <img src={icons.close.href}/>
       </button>
     </div>
