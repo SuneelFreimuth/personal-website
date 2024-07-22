@@ -1,5 +1,9 @@
 $font-sans-serif: 'Inter', sans-serif;
 
+// Darkened Catppuccin Latte Text
+$lightThemeText: hsl(234deg, 16%, 15%);
+$darkThemeText: white;
+
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +15,12 @@ $font-sans-serif: 'Inter', sans-serif;
 }
 
 body {
-  background-color: #1e1e2e;
+  // Catppuccin Latte Base
+  background-color: #eff1f5;
+  &:global(.dark) {
+    background-color: #1e1e2e;
+  }
+
   // background-color: #11111b;
 }
 

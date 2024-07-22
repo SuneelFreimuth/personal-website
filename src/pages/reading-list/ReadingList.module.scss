@@ -4,7 +4,10 @@
 .readingList {
   margin-top: 100px;
   font-family: $font-sans-serif;
-  color: white;
+  color: $lightThemeText;
+  :global(.dark) & {
+    color: $darkThemeText;
+  }
   margin: 100px 10vw;
 
   @media (max-width: 775px) {
@@ -33,6 +36,15 @@
     gap: 5px;
     cursor: pointer;
 
+    img {
+      width: 20px;
+      height: 20px;
+
+      :global(.dark) & {
+        filter: invert(100%);
+      }
+    }
+
     span {
       text-transform: capitalize;
       font-weight: lighter;
@@ -60,7 +72,10 @@
   padding: 24px 32px;
 
   &.inProgress {
-    background-color: #313244;
+    background-color: hsl(223deg, 16%, 83%);
+    :global(.dark) & {
+      background-color: #313244;
+    }
     border-radius: 10px;
   }
 
@@ -85,7 +100,7 @@
     gap: 5px;
 
     h4 {
-      font-weight: lighter;
+      font-weight: light;
       text-transform: uppercase;
     }
 

@@ -8,13 +8,15 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import 'react-tooltip/dist/react-tooltip.css'
-import 'katex/dist/katex.min.css'
-import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
+// import 'react-tooltip/dist/react-tooltip.css'
+// import 'katex/dist/katex.min.css'
+// import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
 
 import { Nav } from './pages/components/Nav'
 import { Home } from './pages/home/Home'
 import { ReadingList } from './pages/reading-list/ReadingList'
+import { DarkModeProvider } from './pages/components/DarkModeContext'
+import { DarkModeToggle } from './pages/components/DarkModeToggle'
 
 import './global.scss'
 
@@ -37,37 +39,53 @@ window.unreachable = (message='Reached unreachable statement.'): never => {
 };
 
 
+export function DarkModeToggleLayout() {
+  return (
+    <>
+      <Outlet/>
+      <DarkModeToggle/>
+    </>
+  );
+}
+
 export function NavLayout() {
   return (
     <>
+      <Outlet/>
       <Nav/>
-      <Outlet />
     </>
-  )
+  );
 }
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home/>,
-  },
-  {
-    element: <NavLayout/>,
+    element: <DarkModeToggleLayout/>,
     children: [
       {
-        path: '/reading',
-        element: <ReadingList/>,
+        path: "/",
+        element: <Home/>,
       },
       {
-        path: '/books',
-        element: <ReadingList/>,
-      },
+        element: <NavLayout/>,
+        children: [
+          {
+            path: '/reading',
+            element: <ReadingList/>,
+          },
+          {
+            path: '/books',
+            element: <ReadingList/>,
+          },
+        ]
+      }
     ]
   }
 ]);
 
 createRoot(document.getElementById('app')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <DarkModeProvider>
+      <RouterProvider router={router} />
+    </DarkModeProvider>
   </StrictMode>
 );

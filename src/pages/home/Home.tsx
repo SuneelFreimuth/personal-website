@@ -83,11 +83,12 @@ function TreeAnimation() {
 
   function draw(ctx: CanvasRenderingContext2D, frameCount: number) {
     const { width, height } = ctx.canvas;
-    ctx.clearRect(0, 0, width, height)
-    drawTree(ctx, frameCount, width / 2, height, config)
+    ctx.clearRect(0, 0, width, height);
+    drawTree(ctx, frameCount, width / 2, height, config);
   }
 
-  // Draws tree using level-order traversal so that 
+  // Draws tree using level-order traversal so that all segments with the same
+  // color can be drawn as a single path.
   function drawTree(ctx: CanvasRenderingContext2D, frameCount: number, x: number, y: number, config: TreeConfig) {
     const { maxDepth, lengthTrunk, lengthScaleLeft, lengthScaleRight, lineWidthMin, lineWidthMax,
       angleLeft, angleRight, colorBase, colorTip } = config;

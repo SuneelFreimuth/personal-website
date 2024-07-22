@@ -1,6 +1,6 @@
 import { useState, useEffect, cloneElement } from 'react';
 
-import { cn, cnWhen } from '../lib';
+import { cn, cnWhen, when } from '../lib';
 import styles from './Fade.module.scss';
 
 
@@ -24,12 +24,13 @@ export function Fade({ revealWhen, children }: {
     return () => clearTimeout(timeout);
   }, [revealWhen]);
 
-  return shouldRenderChild ?
+  return when(
+    shouldRenderChild,
     cloneElement(children, {
       className: cn(
         children.props.className,
         cnWhen(revealWhen, styles.fadeIn, styles.fadeOut),
       ),
-    }) :
-    null;
+    })
+  );
 }

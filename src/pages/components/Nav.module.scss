@@ -9,18 +9,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
   overflow: hidden;
   font-family: $font-sans-serif;
   font-weight: lighter;
   z-index: 999;
 
   h1 {
-    color: white;
     font-size: 24px;
     font-weight: lighter;
     flex: 1;
     text-align: left;
+    color: $lightThemeText;
+    
+    :global(.dark) & {
+      color: $darkThemeText;
+    }
 
     a {
       transition: color 0.2s;
@@ -29,7 +32,7 @@
     }
 
     a:hover {
-      color: #CCC;
+      color: #ccc;
     }
   }
 
@@ -120,8 +123,6 @@
 }
 
 .glassButton {
-  color: white;
-  
   // Wipe animation adapted from this Codepen by Ryan Altvater: https://codepen.io/ryanaltvater/pen/vNgjNW
   position: relative;
   padding: 8px;
@@ -133,7 +134,10 @@
   img {
     display: inline-block;
     height: 1.3rem;
-    filter: invert(100%);
+    
+    :global(.dark) & {
+      filter: invert(100%);
+    }
   }
 
   &:after {
@@ -147,8 +151,14 @@
     height: 1px;
 
     bottom: 0;
-    background-color: white;
+    background-color: $lightThemeText;
     mix-blend-mode: difference;
+    backdrop-filter: invert(100%);
+  }
+
+  :global(.dark) &:after {
+    background-color: white;
+    backdrop-filter: none;
   }
 
   &:hover:after {
@@ -161,12 +171,21 @@
     font-weight: 200;
     gap: 6px;
     font-size: 20px;
-    color: white;
+    color: black;
     text-align: center;
+
+    :global(.dark) & {
+      color: white;
+    }
   }
 
   &.active {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
+
+    &:global(.dark) {
+      background-color: white;
+      color: black;
+    }
   }
 }

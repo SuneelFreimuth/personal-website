@@ -8,6 +8,8 @@ export const icons = {
     iceAndFire: new URL('./icons/house-stark-sigil.png?width=100', import.meta.url),
     stormlightArchive: new URL('./icons/stormlight-archive.svg', import.meta.url),
     wheelOfTime: new URL('./icons/wheel-of-time.webp?width=100', import.meta.url),
+    moon: new URL('./icons/moon.svg', import.meta.url),
+    sun: new URL('./icons/sun.svg', import.meta.url),
 };
 
 

@@ -75,14 +75,7 @@ export function ReadingList() {
               setSearchParams({})
             }}
           >
-            <img
-              src={icons.back.href}
-              style={{
-                filter: 'invert(100%)',
-                width: '20px',
-                height: '20px',
-              }}
-            />
+            <img src={icons.back.href} alt="back button"/>
             <span>ALL</span>
           </div>
           <h2>{SERIES_TITLE[selectedSeries]}</h2>
@@ -112,7 +105,7 @@ export function ReadingList() {
         />
       </Fade>
     </div>
-  )
+  );
 }
 
 function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
@@ -137,7 +130,6 @@ function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
         <h3>{title}</h3>
         <p dangerouslySetInnerHTML={{ __html: description }}/>
         <div className={styles.chips}>
-          <StateChip state={state}/>
           {when(
             isSome(series),
             <SeriesChip
@@ -145,6 +137,7 @@ function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
               onClick={onSeriesChipClick}
             />
           )}
+          <StateChip state={state}/>
         </div>
       </div>
     </div>
@@ -166,7 +159,7 @@ function StateChip({ state }: { state: BookState }) {
     default:
       return null;
   }
-  return <Chip color={color}>{label}</Chip>;
+  return <Chip color={color} style={{ color: 'white'}}>{label}</Chip>;
 }
 
 function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) {
@@ -199,7 +192,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
         <Chip
           color='#fe640b'
           onClick={onClick}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
         >
           <span>Dune</span>
         </Chip>
@@ -210,7 +203,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
         <Chip
           color='#CDD8D9'
           onClick={onClick}
-          style={{ cursor: 'pointer', color: catppuccin.base }}
+          style={{ cursor: 'pointer', color: catppuccin.base, fontWeight: 'bold' }}
         >
           <img
             src={icons.atium.href}
@@ -223,9 +216,10 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
     case Series.IceAndFire:
       return (
         <Chip
-          color='hsl(343deg, 81%, 60%)'
+          // color='hsl(343deg, 81%, 60%)'
+          color='hsl(0, 89%, 35%)'
           onClick={onClick}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
         >
           <img
             src={icons.iceAndFire.href}
@@ -243,7 +237,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
         <Chip
           color='#515966'
           onClick={onClick}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
         >
           <img
             src={icons.stormlightArchive.href}
