@@ -19,6 +19,7 @@ import { DarkModeProvider } from './pages/components/DarkModeContext'
 import { DarkModeToggle } from './pages/components/DarkModeToggle'
 
 import './global.scss'
+import { Raytracer } from './pages/raytracer/Raytracer'
 
 
 declare global {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
           {
             path: '/books',
             element: <ReadingList/>,
+          },
+          {
+            path: '/raytracer',
+            element: <Raytracer/>,
           },
         ]
       }
