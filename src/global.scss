@@ -4,6 +4,16 @@ $font-sans-serif: 'Inter', sans-serif;
 $lightThemeText: hsl(234deg, 16%, 15%);
 $darkThemeText: white;
 
+@mixin textBasic {
+  font-family: $font-sans-serif;
+  color: $lightThemeText;
+  font-size: 16px;
+
+  :global(.dark) & {
+    color: $darkThemeText;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -30,9 +40,4 @@ a {
   &:active {
     color: darken(#cba6f7, 20%);
   }
-}
-
-.brushedGold {
-  // background: image("./assets/brushed-gold.jpg");
-  // background-position: 100% 100%;
 }

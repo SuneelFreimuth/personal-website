@@ -1,0 +1,116 @@
+@use "../../global.scss" as *;
+
+.raytracer {
+  display: grid;
+  box-sizing: border-box;
+  padding-top: 80px;
+  width: 100vw;
+  height: 100vh;
+  grid-template-areas:
+    "canvas controls"
+    "canvas results";
+  grid-template-columns: 700px 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  @include textBasic;
+
+  .canvasArea {
+    grid-area: canvas;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .controlsArea {
+    grid-area: controls;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: flex-start;
+
+      div {
+        label {
+          display: block;
+          font-size: 16px;
+          margin-bottom: 5px;
+        }
+
+        select {
+          @include textBasic;
+          display: block;
+          background: none;
+          padding: 5px;
+        }
+      }
+
+      button {
+        @include textBasic;
+        background: none;
+        font-size: 16px;
+        padding: 7px 10px;
+        transition: color 0.2s, background-color 0.2s;
+
+        &:hover {
+          cursor: pointer;
+          color: white;
+          background-color: $lightThemeText;
+
+          :global(.dark) & {
+            background-color: $darkThemeText;
+            color: $lightThemeText;
+          }
+        }
+      }
+
+      select, button {
+        border: 1px solid $lightThemeText;
+
+        :global(.dark) & {
+          border: 1px solid $darkThemeText;
+        }
+      }
+    }
+  }
+
+  .resultsArea {
+    table {
+      background-color: #ccd0da;
+      :global(.dark) & {
+        background-color: hsl(237deg, 16%, 23%);
+      }
+
+      border-spacing: 20px;
+      border-radius: 20px;
+      padding: 0px 10px 0px 10px;
+
+      thead th, tbody td {
+        @include textBasic;
+      }
+
+      thead th {
+        border-bottom: 1px solid $lightThemeText;
+        :global(.dark) & {
+          border-bottom: 1px solid $darkThemeText;
+        }
+
+        height: 2.5rem;
+        font-weight: normal;
+
+        &:nth-child(1) {
+          min-width: 125px;
+        }
+      }
+
+      tbody td {
+        &:nth-child(1) {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
