@@ -4,9 +4,11 @@ import { useDarkMode } from '../components/DarkModeContext';
 import styles from './Raytracer.module.scss';
 import { isSome, when } from '../lib';
 
+
 const WIDTH = 600;
 const HEIGHT = 450;
 const SERVER = "ws://localhost:8080";
+
 
 interface RenderResult {
   imageBitmap: ImageBitmap,
@@ -14,10 +16,6 @@ interface RenderResult {
   timeToRender: number,
 }
 
-interface RenderJob {
-  start: number,
-  pixelsRendered: number,
-}
 
 const sceneOptions = [
   ["Cornell Box", "cornell_box"],
@@ -33,12 +31,20 @@ const sppOptions = [
   64,
 ];
 
+
+interface RenderJob {
+  start: number,
+  pixelsRendered: number,
+}
+
 let renderJob: RenderJob | null = null;
 let socket: WebSocket;
+
 
 enum MessageType {
   RenderedPixels = 0,
 }
+
 
 export function Raytracer() {
   const [scene, setScene] = useState('cornell_box');
@@ -75,11 +81,9 @@ export function Raytracer() {
         const timeToRender = (Date.now() - renderJob!.start) / 1000;
         const imageBitmap =
           await createImageBitmap(ctx.getImageData(0, 0, WIDTH, HEIGHT));
-        setRenderResults(rrs => {
-          const renderResults = structuredClone(rrs);
-          renderResults.unshift({ imageBitmap, timeToRender });
-          return renderResults;
-        });
+        setRenderResults(rrs =>
+          [{ imageBitmap, timeToRender }, ...renderResults]
+        );
         renderJob = null;
         setRendering(false);
       }
@@ -301,8 +305,4 @@ function ImageBitmapView({ bitmap }: {
       height={height}
     />
   );
-}
-
-enum ServerMessage {
-  RenderedPixels = 0,
 }
