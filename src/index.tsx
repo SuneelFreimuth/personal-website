@@ -77,10 +77,10 @@ const router = createBrowserRouter([
             path: '/books',
             element: <ReadingList/>,
           },
-          {
-            path: '/raytracer',
-            element: <Raytracer/>,
-          },
+          // {
+          //   path: '/raytracer',
+          //   element: <Raytracer/>,
+          // },
         ]
       }
     ]
