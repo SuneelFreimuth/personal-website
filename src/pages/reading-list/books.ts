@@ -15,6 +15,7 @@ export enum Series {
     Dune,
     IceAndFire,
     StormlightArchive,
+    HyperionCantos,
 }
 
 export interface Book {
@@ -223,6 +224,23 @@ export const books: Book[] = [
         author: 'Dan Simmons',
         description: '',
         image: bookCovers.hyperion,
+        series: Series.HyperionCantos,
+        state: S.Done,
+    },
+    {
+        title: 'The Fall of Hyperion',
+        author: 'Dan Simmons',
+        description: '',
+        image: bookCovers.theFallOfHyperion,
+        series: Series.HyperionCantos,
+        state: S.InProgress,
+    },
+    {
+        title: 'Words of Radiance',
+        author: 'Brandon Sanderson',
+        description: 'Second book of <em>The Stormlight Archive</em>.',
+        image: bookCovers.wordsOfRadiance,
+        series: Series.StormlightArchive,
         state: S.InProgress,
     },
 ]

@@ -29,6 +29,7 @@ export const bookCovers = {
     mistborn: new URL('./book-covers/mistborn.jpg', import.meta.url),
     newSpring: new URL('./book-covers/new-spring.jpeg', import.meta.url),
     theDragonReborn: new URL('./book-covers/the-dragon-reborn.jpeg', import.meta.url),
+    theFallOfHyperion: new URL('./book-covers/the-fall-of-hyperion.jpg', import.meta.url),
     theFiresOfHeaven: new URL('./book-covers/the-fires-of-heaven.jpg', import.meta.url),
     theGatheringStorm: new URL('./book-covers/the-gathering-storm.jpeg', import.meta.url),
     theGreatHunt: new URL('./book-covers/the-great-hunt.jpeg', import.meta.url),
@@ -39,6 +40,7 @@ export const bookCovers = {
     towersOfMidnight: new URL('./book-covers/towers-of-midnight.jpeg', import.meta.url),
     warbreaker: new URL('./book-covers/warbreaker.jpeg', import.meta.url),
     wintersHeart: new URL('./book-covers/winters-heart.jpeg', import.meta.url),
+    wordsOfRadiance: new URL('./book-covers/words-of-radiance.jpg', import.meta.url),
 };
 
 

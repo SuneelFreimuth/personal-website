@@ -16,6 +16,7 @@ const SERIES_ID = {
   [Series.WheelOfTime]: 'wheel-of-time',
   [Series.IceAndFire]: 'ice-and-fire',
   [Series.StormlightArchive]: 'stormlight-archive',
+  [Series.HyperionCantos]: 'hyperion-cantos',
 };
 
 const SERIES_FROM_ID = {
@@ -23,7 +24,8 @@ const SERIES_FROM_ID = {
   'mistborn': Series.Mistborn,
   'wheel-of-time': Series.WheelOfTime,
   'ice-and-fire': Series.IceAndFire,
-  'stormlight-archive': Series.IceAndFire,
+  'stormlight-archive': Series.StormlightArchive,
+  'hyperion-cantos': Series.HyperionCantos,
 };
 
 const SERIES_TITLE = {
@@ -32,6 +34,7 @@ const SERIES_TITLE = {
   [Series.WheelOfTime]: 'The Wheel of Time',
   [Series.IceAndFire]: 'A Song of Ice and Fire',
   [Series.StormlightArchive]: 'The Stormlight Archive',
+  [Series.HyperionCantos]: 'Hyperion Cantos',
 };
 
 
@@ -90,7 +93,7 @@ export function ReadingList() {
               setFocusedImage(book.image);
             }}
             onSeriesChipClick={() => {
-              const seriesId = SERIES_ID[book.series];
+              const seriesId = SERIES_ID[book.series!];
               setSearchParams({ series: seriesId });
             }}
           />
@@ -133,7 +136,7 @@ function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
           {when(
             isSome(series),
             <SeriesChip
-              series={series}
+              series={series!}
               onClick={onSeriesChipClick}
             />
           )}
@@ -167,6 +170,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
     case Series.WheelOfTime:
       return (
         <Chip
+          className={styles.seriesChip}
           onClick={onClick}
           style={{
             cursor: 'pointer',
@@ -190,6 +194,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
     case Series.Dune:
       return (
         <Chip
+          className={styles.seriesChip}
           color='#fe640b'
           onClick={onClick}
           style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
@@ -201,6 +206,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
     case Series.Mistborn:
       return (
         <Chip
+          className={styles.seriesChip}
           color='#CDD8D9'
           onClick={onClick}
           style={{ cursor: 'pointer', color: catppuccin.base, fontWeight: 'bold' }}
@@ -216,7 +222,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
     case Series.IceAndFire:
       return (
         <Chip
-          // color='hsl(343deg, 81%, 60%)'
+          className={styles.seriesChip}
           color='hsl(0, 89%, 35%)'
           onClick={onClick}
           style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
@@ -235,6 +241,7 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
     case Series.StormlightArchive:
       return (
         <Chip
+          className={styles.seriesChip}
           color='#515966'
           onClick={onClick}
           style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
@@ -247,6 +254,18 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
             }}
           />
           <span>The Stormlight Archive</span>
+        </Chip>
+      );
+
+    case Series.HyperionCantos:
+      return (
+        <Chip
+          className={styles.seriesChip}
+          color='#fcd14d'
+          onClick={onClick}
+          style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
+        >
+          <span>Hyperion Cantos</span>
         </Chip>
       );
   }
