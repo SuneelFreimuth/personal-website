@@ -88,9 +88,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('app')!).render(
-  <StrictMode>
+  // <StrictMode>
     <DarkModeProvider>
       <RouterProvider router={router} />
     </DarkModeProvider>
-  </StrictMode>
+  // </StrictMode>
 );

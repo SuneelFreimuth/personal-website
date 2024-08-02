@@ -22,6 +22,7 @@
     "firebase": "^10.0.0",
     "firebase-hooks": "^0.0.1",
     "highlight.js": "^11.8.0",
+    "immutable": "^4.3.7",
     "katex": "^0.16.8",
     "lorem-ipsum": "^2.0.8",
     "react": "^18.2.0",

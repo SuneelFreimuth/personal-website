@@ -1,4 +1,4 @@
-export function isSome<T>(value: T): boolean {
+export function isSome<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
 
@@ -14,10 +14,18 @@ export const cnWhen = (condition: boolean, classTrue: string, classFalse?: strin
     classFalse;
 
 
-export const when = (cond: boolean, element: JSX.Element): JSX.Element | null =>
+export const when = (cond: boolean, element: JSX.Element | (() => JSX.Element)): JSX.Element | null =>
   cond ?
-    element :
+    typeof element === 'function' ?
+      // @ts-ignore
+      element() :
+      element :
     null;
+
+
+export function imset<T = Object>(obj: T, props: Partial<T>): T {
+  return { ...structuredClone(obj), ...props };
+}
 
 
 export type Color = [number, number, number]
@@ -85,11 +93,11 @@ export const rgbString = ([r, g, b]: Color) =>
   `rgb(${r}, ${g}, ${b})`;
 
 export function debounce(ms: number, f: () => void): Function {
-  let lastCall = null
+  let lastCall = null;
   return () => {
     if (lastCall == null || Date.now() - lastCall < ms) {
-      f()
-      lastCall = Date.now()
+      f();
+      lastCall = Date.now();
     }
   }
 }
