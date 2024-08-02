@@ -93,7 +93,7 @@ export const rgbString = ([r, g, b]: Color) =>
   `rgb(${r}, ${g}, ${b})`;
 
 export function debounce(ms: number, f: () => void): Function {
-  let lastCall = null;
+  let lastCall: number | null = null;
   return () => {
     if (lastCall == null || Date.now() - lastCall < ms) {
       f();
