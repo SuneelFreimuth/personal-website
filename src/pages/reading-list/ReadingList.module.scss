@@ -82,7 +82,9 @@
   > img {
     position: relative;
     height: 250px;
-    transition: transform 0.2s, filter 0.2s;
+    transition:
+      transform 0.2s,
+      filter 0.2s;
     cursor: pointer;
     transform: perspective(1000px) rotateY(15deg) rotateX(3deg);
     $shadow-color: #030307;
@@ -90,7 +92,7 @@
 
     &:hover {
       transform: scale(1.05);
-      filter: drop-shadow(-3px 5px 14px $shadow-color);
+      filter: drop-shadow(-3px 5px 14px lighten($shadow-color, 10%));
     }
   }
 
