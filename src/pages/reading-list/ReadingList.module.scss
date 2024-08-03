@@ -122,6 +122,7 @@
 
       .seriesChip {
         transition: transform 0.2s;
+        font-weight: bold;
 
         &:hover {
           transform: scale(1.05);

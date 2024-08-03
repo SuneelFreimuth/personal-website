@@ -45,5 +45,12 @@ export const bookCovers = {
 
 
 export const patterns = {
-    shinyGold: new URL('shiny-gold.jpg', import.meta.url),
+    shinyGold: new URL('patterns/shiny-gold.jpg', import.meta.url),
+    mist: new URL('patterns/mist2.png', import.meta.url),
+    sand: new URL('patterns/sand.jpg', import.meta.url),
+    highstorm: new URL('patterns/shallan.jpg', import.meta.url),
+    ironThrone: new URL('patterns/iron-throne.jpg', import.meta.url),
+    dragon: new URL('patterns/dragon-scales.jpg', import.meta.url),
+    nebula: new URL('patterns/nebula.jpg', import.meta.url),
+    needles: new URL('patterns/needles.jpg', import.meta.url),
 }

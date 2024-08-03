@@ -148,21 +148,21 @@ function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
 }
 
 function StateChip({ state }: { state: BookState }) {
-  let color: string;
+  let bgColor: string;
   let label: string;
   switch (state) {
     case BookState.Todo:
-      color = '#7f849c';
+      bgColor = '#7f849c';
       label = 'Todo';
       break;
     case BookState.InProgress:
-      color = '#89b4fa';
+      bgColor = '#89b4fa';
       label = 'In Progress';
       break;
     default:
       return null;
   }
-  return <Chip color={color} style={{ color: 'white'}}>{label}</Chip>;
+  return <Chip bgColor={bgColor} fgColor='white'>{label}</Chip>;
 }
 
 function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) {
@@ -172,20 +172,17 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
         <Chip
           className={styles.seriesChip}
           onClick={onClick}
+          fgColor='black'
           style={{
-            cursor: 'pointer',
             background: `url(${patterns.shinyGold.href})`,
             backgroundPosition: 'left',
             backgroundSize: '110%',
-            fontWeight: 'bold',
-            color: 'black',
             boxShadow: '0px 1px 5px black',
           }}
         >
           <img
             src={icons.wheelOfTime.href}
             alt="Wheel of Time Logo"
-            style={{ filter: 'invert(0%)' }}
           />
           <span>The Wheel of Time</span>
         </Chip>
@@ -195,9 +192,15 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
       return (
         <Chip
           className={styles.seriesChip}
-          color='#fe640b'
+          fgColor='white'
+          bgColor='#ffcc8e'
           onClick={onClick}
-          style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
+          style={{
+            backgroundImage: `url(${patterns.sand.href})`,
+            backgroundSize: '400%',
+            backgroundPosition: 'center',
+            backgroundBlendMode: 'multiply',
+          }}
         >
           <span>Dune</span>
         </Chip>
@@ -207,9 +210,14 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
       return (
         <Chip
           className={styles.seriesChip}
-          color='#CDD8D9'
+          fgColor={catppuccin.base}
+          bgColor='#a0a9aa'
           onClick={onClick}
-          style={{ cursor: 'pointer', color: catppuccin.base, fontWeight: 'bold' }}
+          style={{
+            backgroundImage: `url(${patterns.mist.href})`,
+            backgroundPosition: 'center',
+            backgroundSize: '150%',
+          }}
         >
           <img
             src={icons.atium.href}
@@ -223,17 +231,23 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
       return (
         <Chip
           className={styles.seriesChip}
-          color='hsl(0, 89%, 35%)'
+          fgColor='white'
+          bgColor='hsl(1, 17%, 71%)'
           onClick={onClick}
-          style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
+          style={{
+            backgroundImage: `url(${patterns.dragon.href})`,
+            backgroundSize: '155%',
+            backgroundPosition: '56% 7%',
+            backgroundBlendMode: 'multiply',
+          }}
         >
-          <img
+          {/* <img
             src={icons.iceAndFire.href}
             alt="Sigil of House Stark from A Song of Ice and Fire by George R. R. Martin"
             style={{
               filter: 'invert(100%)',
             }}
-          />
+          /> */}
           <span>A Song of Ice and Fire</span>
         </Chip>
       );
@@ -242,16 +256,19 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
       return (
         <Chip
           className={styles.seriesChip}
-          color='#515966'
+          fgColor='black'
+          bgColor='hsl(182.8deg, 45%, 74.5%)'
           onClick={onClick}
-          style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
+          style={{
+            backgroundImage: `url(${patterns.highstorm.href})`,
+            backgroundSize: '320%',
+            backgroundPosition: '90% 31%',
+            backgroundBlendMode: 'luminosity',
+          }}
         >
           <img
             src={icons.stormlightArchive.href}
             alt="Logo for The Stormlight Archive by Brandon Sanderson"
-            style={{
-              filter: 'invert(100%)',
-            }}
           />
           <span>The Stormlight Archive</span>
         </Chip>
@@ -261,9 +278,15 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
       return (
         <Chip
           className={styles.seriesChip}
-          color='#fcd14d'
+          fgColor='white'
+          bgColor='hsl(0deg, 0%, 20%)'
           onClick={onClick}
-          style={{ cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
+          style={{
+            backgroundImage: `url(${patterns.needles.href})`,
+            backgroundSize: '250%',
+            backgroundPosition: '47% 68%',
+            backgroundBlendMode: 'soft-light',
+          }}
         >
           <span>Hyperion Cantos</span>
         </Chip>
