@@ -10,7 +10,7 @@ import { isSome, cn, cnWhen, when } from '../lib';
 import { Fade } from '../components/Fade';
 
 
-const SERIES_ID = {
+const SERIES_ID: { [s in Series]: string } = {
   [Series.Dune]: 'dune',
   [Series.Mistborn]: 'mistborn',
   [Series.WheelOfTime]: 'wheel-of-time',
@@ -19,7 +19,7 @@ const SERIES_ID = {
   [Series.HyperionCantos]: 'hyperion-cantos',
 };
 
-const SERIES_FROM_ID = {
+const SERIES_FROM_ID: { [id: string]: Series } = {
   'dune': Series.Dune,
   'mistborn': Series.Mistborn,
   'wheel-of-time': Series.WheelOfTime,
@@ -28,7 +28,7 @@ const SERIES_FROM_ID = {
   'hyperion-cantos': Series.HyperionCantos,
 };
 
-const SERIES_TITLE = {
+const SERIES_TITLE: { [s in Series]: string } = {
   [Series.Dune]: 'Dune',
   [Series.Mistborn]: 'Mistborn',
   [Series.WheelOfTime]: 'The Wheel of Time',
@@ -36,6 +36,8 @@ const SERIES_TITLE = {
   [Series.StormlightArchive]: 'The Stormlight Archive',
   [Series.HyperionCantos]: 'Hyperion Cantos',
 };
+
+const SERIES_LIST = Object.values(Series).sort() as Series[];
 
 
 const BOOK_STATE_PRIORITY = {
@@ -58,6 +60,11 @@ export function ReadingList() {
 
   const selectedSeries = SERIES_FROM_ID[searchParams.get('series')!];
 
+  function selectSeries(series: Series) {
+    const seriesId = SERIES_ID[series];
+    setSearchParams({ series: seriesId });
+  }
+
   const books_ =
     isSome(selectedSeries) ?
       books.filter(({ series }) => series === selectedSeries) :
@@ -69,6 +76,18 @@ export function ReadingList() {
     <div className={styles.readingList}>
       <h1>Reading List</h1>
       <p>Books I'm reading and books I've read.</p>
+      <div className={styles.seriesChips}>
+        {SERIES_LIST.map(series =>
+          <SeriesChip
+            key={series}
+            className={styles.seriesChip}
+            series={series}
+            onClick={() => {
+              selectSeries(series);
+            }}
+          />
+        )}
+      </div>
       {when(
         isSome(selectedSeries),
         <>
@@ -93,8 +112,7 @@ export function ReadingList() {
               setFocusedImage(book.image);
             }}
             onSeriesChipClick={() => {
-              const seriesId = SERIES_ID[book.series!];
-              setSearchParams({ series: seriesId });
+              selectSeries(book.series!);
             }}
           />
         ))}
@@ -177,7 +195,6 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
             background: `url(${patterns.shinyGold.href})`,
             backgroundPosition: 'left',
             backgroundSize: '110%',
-            boxShadow: '0px 1px 5px black',
           }}
         >
           <img
