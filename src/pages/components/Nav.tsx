@@ -4,12 +4,11 @@ import { NavLink, Link } from 'react-router-dom'
 import styles from './Nav.module.scss'
 
 import { icons } from '../../assets'
-
-const MOBILE_THRESHOLD = '775px'
+import { onMobile, when } from '../lib'
+import { useDarkMode } from './DarkModeContext'
 
 export function Nav() {
-  const onMobile = window.matchMedia(`(max-width: ${MOBILE_THRESHOLD})`)
-  return onMobile.matches ? <MobileNav/> : <DesktopNav/>
+  return onMobile() ? <MobileNav/> : <DesktopNav/>
 }
 
 function DesktopNav() {
@@ -36,6 +35,7 @@ function DesktopNav() {
 
 function MobileNav() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { darkModeOn } = useDarkMode();
 
   return (
     <div className={styles.mobileNav}>
@@ -46,7 +46,8 @@ function MobileNav() {
           setMenuOpen(true)
         }}
       />
-      {menuOpen ?
+      {when(
+        menuOpen,
         <div
           className={styles.openMenu}
           onClick={e => {
@@ -69,9 +70,8 @@ function MobileNav() {
               <span>Resume</span>
             </Link>
           </div>
-        </div> :
-        null
-      }
+        </div>
+      )}
     </div>
   )
 }

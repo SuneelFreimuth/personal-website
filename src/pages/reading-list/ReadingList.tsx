@@ -6,7 +6,7 @@ import { Chip } from '../components/Chip';
 import styles from './ReadingList.module.scss';
 import catppuccin from '../../catppuccin';
 import { icons, patterns } from '../../assets'
-import { isSome, cn, cnWhen, when } from '../lib';
+import { isSome, cn, cnWhen, when, onMobile } from '../lib';
 import { Fade } from '../components/Fade';
 
 
@@ -129,24 +129,29 @@ export function ReadingList() {
   );
 }
 
-function BookEntry({ book, onCoverClick, onSeriesChipClick }: {
+function BookEntry({
+  book: { title, author, description, image, state, series, },
+  onCoverClick,
+  onSeriesChipClick
+}: {
   book: Book,
   onCoverClick: Function,
   onSeriesChipClick: Function,
 }) {
-  const { title, author, description, image, state, series } = book;
   return (
     <div className={cn(
       styles.bookEntry,
       cnWhen(state === BookState.InProgress, styles.inProgress),
     )}>
-      <img
-        src={image.href}
-        alt={`Cover of the book ${title} by ${author}`}
-        aria-label={`Cover of the book ${title} by ${author}`}
-        onClick={onCoverClick}
-      />
-      <div>
+      <div className={styles.bookCover}>
+        <img
+          src={image.href}
+          alt={`Cover of the book ${title} by ${author}`}
+          aria-label={`Cover of the book ${title} by ${author}`}
+          onClick={onMobile() ? undefined : onCoverClick}
+        />
+      </div>
+      <div className={styles.bookDetails}>
         <h4>{author}</h4>
         <h3>{title}</h3>
         <p dangerouslySetInnerHTML={{ __html: description }}/>

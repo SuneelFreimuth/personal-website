@@ -3,6 +3,10 @@ $font-sans-serif: 'Inter', sans-serif;
 // Darkened Catppuccin Latte Text
 $lightThemeText: hsl(234deg, 16%, 15%);
 $darkThemeText: white;
+$lightThemeBg: #eff1f5;
+$darkThemeBg: #1e1e2e;
+
+$mobileWidth: 500px;
 
 @mixin textBasic {
   font-family: $font-sans-serif;
@@ -12,6 +16,12 @@ $darkThemeText: white;
   :global(.dark) & {
     color: $darkThemeText;
   }
+}
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 * {
@@ -26,12 +36,11 @@ $darkThemeText: white;
 
 body {
   // Catppuccin Latte Base
-  background-color: #eff1f5;
-  &:global(.dark) {
-    background-color: #1e1e2e;
-  }
+  background-color: $lightThemeBg;
 
-  // background-color: #11111b;
+  &:global(.dark) {
+    background-color: $darkThemeBg;
+  }
 }
 
 a {

@@ -101,3 +101,9 @@ export function debounce(ms: number, f: () => void): Function {
     }
   }
 }
+
+
+export const MOBILE_THRESHOLD = '500px';
+
+export const onMobile = () =>
+  window.matchMedia(`(max-width: ${MOBILE_THRESHOLD})`).matches;

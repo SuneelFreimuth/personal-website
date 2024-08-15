@@ -5,13 +5,16 @@
   margin-top: 100px;
   font-family: $font-sans-serif;
   color: $lightThemeText;
+
   :global(.dark) & {
     color: $darkThemeText;
   }
+
   margin: 100px 10vw;
 
-  @media (max-width: 775px) {
-    margin: 100px 50px;
+  @media (max-width: $mobileWidth) {
+    margin: 100px 40px;
+
   }
 
   h1 {
@@ -33,6 +36,15 @@
     gap: 10px;
     margin-bottom: 10px;
     flex-wrap: wrap;
+
+    @media (max-width: $mobileWidth) {
+      justify-content: center;
+    }
+
+    .seriesChip {
+      filter: none;
+      filter: drop-shadow(0px 3px 5px #1117);
+    }
   }
               
   .seriesHeader {
@@ -65,8 +77,28 @@
     gap: 24px 16px;
     margin-top: 40px;
 
-    @media (max-width: 775px) {
+    @media (max-width: $mobileWidth) {
       grid-template-columns: 1fr;
+    }
+  }
+}
+
+
+.seriesChip {
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-weight: bold;
+  filter: drop-shadow(0px 3px 10px #1117);
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px #bbb;
+  }
+
+  :global(.dark) & {
+    box-shadow: none;
+
+    &:hover {
+      box-shadow: none;
     }
   }
 }
@@ -78,6 +110,11 @@
   gap: 15px;
   padding: 24px 32px;
 
+  @media (max-width: $mobileWidth) {
+    grid-template-columns: auto;
+    padding: 24px 24px;
+  }
+
   &.inProgress {
     background-color: hsl(223deg, 16%, 83%);
     :global(.dark) & {
@@ -86,24 +123,35 @@
     border-radius: 10px;
   }
 
-  > img {
-    position: relative;
-    height: 250px;
-    transition:
-      transform 0.2s,
-      filter 0.2s;
-    cursor: pointer;
-    transform: perspective(1000px) rotateY(15deg) rotateX(3deg);
-    $shadow-color: #030307;
-    filter: drop-shadow(-2px 3px 10px $shadow-color);
+  .bookCover {
+    @media (max-width: $mobileWidth) {
+      @include flexCenter;
+    }
 
-    &:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(-3px 5px 14px lighten($shadow-color, 10%));
+    img {
+      position: relative;
+      height: 300px;
+      filter: drop-shadow(0px 3px 10px #111c);
+
+      @media (min-width: $mobileWidth) {
+        height: 250px;
+        transition:
+          transform 0.2s,
+          filter 0.2s;
+        cursor: pointer;
+        transform: perspective(1000px) rotateY(15deg) rotateX(3deg);
+        $shadow-color: #030307;
+        filter: drop-shadow(-2px 3px 10px $shadow-color);
+
+        &:hover {
+          transform: scale(1.05);
+          filter: drop-shadow(-3px 5px 14px lighten($shadow-color, 10%));
+        }
+      }
     }
   }
 
-  > div {
+  .bookDetails {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -122,30 +170,20 @@
       margin-bottom: 5px;
     }
 
+    @media (max-width: $mobileWidth) {
+      h3, h4, p {
+        text-align: center;
+      }
+    }
+
     .chips {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
 
-    }
-  }
-}
-
-.seriesChip {
-  transition: transform 0.2s, box-shadow 0.2s;
-  font-weight: bold;
-  box-shadow: 0px 2px 6px #aaa;
-
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 4px 10px #bbb;
-  }
-
-  :global(.dark) & {
-    box-shadow: none;
-
-    &:hover {
-      box-shadow: none;
+      @media (max-width: $mobileWidth) {
+        justify-content: center;
+      }
     }
   }
 }
