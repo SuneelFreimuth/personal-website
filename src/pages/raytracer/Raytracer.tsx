@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'
 
 import { useDarkMode } from '../components/DarkModeContext';
 import styles from './Raytracer.module.scss';
 import { isSome, when } from '../lib';
-import { Connection, Message, MessageType, PixelsMessage } from './connection';
+import { Connection, Message, ConnectionEvent, PixelsMessage } from './connection';
 
 
 const WIDTH = 600;
@@ -41,7 +43,8 @@ export function Raytracer() {
   const [spp, setSpp] = useState(SPP_OPTIONS[0]);
   const [renderResults, setRenderResults] = useState([] as RenderResult[]);
   const canvasRef = useRef(null as HTMLCanvasElement | null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null as string | null);
+  const { darkModeOn } = useDarkMode();
 
   const connectionRef = useRef(null as Connection | null);
   const renderJobRef = useRef(null as RenderJob | null);
@@ -80,7 +83,7 @@ export function Raytracer() {
     setRenderResults(rrs =>
       [
         { imageBitmap, timeToRender, },
-        ...renderResults,
+        ...rrs,
       ]
     );
     renderJobRef.current = null;
@@ -89,11 +92,12 @@ export function Raytracer() {
   }
 
   async function onMessage(msg: Message) {
-    console.log(msg);
     switch (msg.type) {
-      case MessageType.Pixels:
-        if (renderJobRef.current === null)
+      case ConnectionEvent.Pixels:
+        if (!isSome(renderJobRef.current))
           break;
+        const renderJob = renderJobRef.current;
+
         const { numPixels, x, y, pixels } = msg as PixelsMessage;
         const imageData = new ImageData(numPixels, 1);
         for (let i = 0; i < numPixels; i++) {
@@ -103,19 +107,28 @@ export function Raytracer() {
         const ctx = canvasRef.current!.getContext('2d')!;
         ctx.putImageData(imageData, x, y);
 
-        const newPixelsRendered = renderJobRef.current.pixelsRendered + numPixels;
+        const newPixelsRendered = renderJob.pixelsRendered + numPixels;
         if (newPixelsRendered < WIDTH * HEIGHT) {
-          renderJobRef.current.pixelsRendered = newPixelsRendered;
+          renderJob.pixelsRendered = newPixelsRendered;
           setPixelsRendered(newPixelsRendered);
         } else {
           finishRendering();
         }
         break;
     }
-  };
+  }
 
-  const onSubmit = e => {
+  function onConnectionClose(e: CloseEvent) {
+    toast('Connection to server closed.', {
+      type: 'error',
+      position: 'bottom-center',
+    });
+  }
+
+  const onSettingsSubmit = e => {
     e.preventDefault();
+    if (!connectionRef.current?.isOpen())
+      return;
     if (rendering)
       stopRendering();
     else
@@ -130,11 +143,12 @@ export function Raytracer() {
     const connection = new Connection({
       url: SERVER,
     });
-    connection.addEventListener(MessageType.Pixels, onMessage);
+    connection.addEventListener(ConnectionEvent.Pixels, onMessage);
+    connection.addEventListener(ConnectionEvent.Close, onConnectionClose);
     connectionRef.current = connection;
     return () => {
       connection.close();
-    }
+    };
   }, []);
 
   return (
@@ -147,7 +161,10 @@ export function Raytracer() {
         />
         {when(
           rendering,
-          <p>Rendering: {(pixelsRendered / (WIDTH * HEIGHT) * 100).toFixed(1)}%</p>,
+          () => {
+            const completion = pixelsRendered / (WIDTH * HEIGHT) * 100;
+            return <p>Rendering: {completion.toFixed(1)}%</p>;
+          }
         )}
       </div>
       <div className={styles.controlsArea}>
@@ -157,16 +174,20 @@ export function Raytracer() {
           setScene={setScene}
           spp={spp}
           setSpp={setSpp}
-          onSubmit={onSubmit}
+          onSubmit={onSettingsSubmit}
         />
-        {when(
+        {/* {when(
           isSome(error),
           <div style={{ color: 'red' }}>{error}</div>
-        )}
+        )} */}
       </div>
       <div className={styles.resultsArea}>
-        <RenderResults renderResults={renderResults} />
+        {when(
+          renderResults.length > 0,
+          <RenderResults renderResults={renderResults}/>,
+        )}
       </div>
+      <ToastContainer/>
     </div>
   )
 }

@@ -31,6 +31,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-router-dom": "^6.8.2",
     "react-simple-code-editor": "^0.13.1",
+    "react-toastify": "^10.0.5",
     "react-tooltip": "^5.18.1",
     "seedrandom": "^3.0.5",
     "use-constant": "^1.1.1"

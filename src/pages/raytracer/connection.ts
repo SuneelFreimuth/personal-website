@@ -1,12 +1,14 @@
 import { isSome } from "../lib";
 
 
-export enum MessageType {
-    Pixels = 'pixels'
+export enum ConnectionEvent {
+    Pixels = 'pixels',
+    Close = 'close'
 }
 
+
 export interface Message {
-    type: MessageType,
+    type: ConnectionEvent,
 }
 
 export interface PixelsMessage extends Message {
@@ -23,7 +25,7 @@ function deserializeMessage(data: ArrayBufferLike): Message {
         default:
             const numPixels = view.getUint8(1);
             return {
-                type: MessageType.Pixels,
+                type: ConnectionEvent.Pixels,
                 numPixels,
                 x: view.getUint16(2, true),
                 y: view.getUint16(4, true),
@@ -33,10 +35,10 @@ function deserializeMessage(data: ArrayBufferLike): Message {
 }
 
 
-type MessageHandler = (msg: Message) => void;
+type EventHandler = (event: ConnectionEvent) => void;
 
 type Listeners = {
-    [event in MessageType]: MessageHandler[];
+    [event in ConnectionEvent]: EventHandler[];
 };
 
 interface ConnectionConfig {
@@ -52,7 +54,7 @@ export class Connection {
 
     constructor({ url }: ConnectionConfig) {
         const listeners = {};
-        for (const event of Object.values(MessageType))
+        for (const event of Object.values(ConnectionEvent))
             listeners[event] = [];
         this.listeners = listeners as Listeners;
 
@@ -64,11 +66,12 @@ export class Connection {
         });
 
         socket.addEventListener('close', e => {
-            console.log('Connection to server closed.');
+            for (const listener of this.listeners[ConnectionEvent.Close])
+                listener(e);
         });
 
         socket.addEventListener('message', e => {
-            for (const listener of this.listeners[MessageType.Pixels])
+            for (const listener of this.listeners[ConnectionEvent.Pixels])
                 listener(deserializeMessage(e.data));
         });
 
@@ -83,7 +86,10 @@ export class Connection {
         this.socket.close();
     }
 
-    addEventListener = (type: MessageType, handler: MessageHandler) => {
+    isOpen = () =>
+        this.socket.readyState === WebSocket.OPEN;
+
+    addEventListener = (type: ConnectionEvent, handler: MessageHandler) => {
         if (isSome(this.listeners[type])) {
             this.listeners[type].push(handler);
         } else {
@@ -91,7 +97,7 @@ export class Connection {
         }
     }
 
-    removeEventListener = (type: MessageType, handler: MessageHandler) => {
+    removeEventListener = (type: ConnectionEvent, handler: MessageHandler) => {
         if (!isSome(this.listeners[type]))
             return;
         const i = this.listeners[type].indexOf(handler);
