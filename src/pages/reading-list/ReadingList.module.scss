@@ -110,17 +110,38 @@
   gap: 15px;
   padding: 24px 32px;
 
-  @media (max-width: $mobileWidth) {
-    grid-template-columns: auto;
-    padding: 24px 24px;
-  }
-
   &.inProgress {
     background-color: hsl(223deg, 16%, 83%);
     :global(.dark) & {
       background-color: #313244;
     }
     border-radius: 10px;
+    grid-template-rows: auto 1fr;
+
+    .inProgressLabel {
+      grid-column: span 2;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: hsl(223deg, 16%, 30%);
+      letter-spacing: 1px;
+
+      :global(.dark) & {
+        color: #99a;
+      }
+    }
+  }
+
+  @media (max-width: $mobileWidth) {
+    grid-template-columns: auto;
+    padding: 24px 24px;
+    
+    &.inProgress {
+      grid-template-rows: repeat(3, auto);
+      
+      .inProgressLabel {
+        grid-column: unset;
+      }
+    }
   }
 
   .bookCover {

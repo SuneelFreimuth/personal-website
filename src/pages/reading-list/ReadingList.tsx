@@ -143,6 +143,10 @@ function BookEntry({
       styles.bookEntry,
       cnWhen(state === BookState.InProgress, styles.inProgress),
     )}>
+      {when(
+        state === BookState.InProgress,
+        <p className={styles.inProgressLabel}>Reading</p>
+      )}
       <div className={styles.bookCover}>
         <img
           src={image.href}
@@ -171,21 +175,14 @@ function BookEntry({
 }
 
 function StateChip({ state }: { state: BookState }) {
-  let bgColor: string;
-  let label: string;
   switch (state) {
     case BookState.Todo:
-      bgColor = '#7f849c';
-      label = 'Todo';
-      break;
+      return <Chip bgColor='#7f849c' fgColor='white'>Todo</Chip>;
+
     case BookState.InProgress:
-      bgColor = '#89b4fa';
-      label = 'In Progress';
-      break;
-    default:
+    case BookState.Done:
       return null;
   }
-  return <Chip bgColor={bgColor} fgColor='white'>{label}</Chip>;
 }
 
 function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) {
