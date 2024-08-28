@@ -17,6 +17,7 @@ const SERIES_ID: { [s in Series]: string } = {
   [Series.IceAndFire]: 'ice-and-fire',
   [Series.StormlightArchive]: 'stormlight-archive',
   [Series.HyperionCantos]: 'hyperion-cantos',
+  [Series.SunEater]: 'sun-eater',
 };
 
 const SERIES_FROM_ID: { [id: string]: Series } = {
@@ -26,6 +27,7 @@ const SERIES_FROM_ID: { [id: string]: Series } = {
   'ice-and-fire': Series.IceAndFire,
   'stormlight-archive': Series.StormlightArchive,
   'hyperion-cantos': Series.HyperionCantos,
+  'sun-eater': Series.SunEater,
 };
 
 const SERIES_TITLE: { [s in Series]: string } = {
@@ -35,6 +37,7 @@ const SERIES_TITLE: { [s in Series]: string } = {
   [Series.IceAndFire]: 'A Song of Ice and Fire',
   [Series.StormlightArchive]: 'The Stormlight Archive',
   [Series.HyperionCantos]: 'Hyperion Cantos',
+  [Series.SunEater]: 'Sun Eater',
 };
 
 const SERIES_LIST = Object.values(Series).sort() as Series[];
@@ -308,6 +311,24 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
           }}
         >
           <span>Hyperion Cantos</span>
+        </Chip>
+      );
+
+    case Series.SunEater:
+      return (
+        <Chip
+          className={styles.seriesChip}
+          fgColor='white'
+          bgColor='hsl(0deg, 0%, 20%)'
+          onClick={onClick}
+          style={{
+            backgroundImage: `url(${patterns.sunSurface.href})`,
+            backgroundSize: '200%',
+            backgroundPosition: '47% 68%',
+            // letterSpacing: '1px'
+          }}
+        >
+          <span>Sun Eater</span>
         </Chip>
       );
   }

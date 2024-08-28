@@ -21,6 +21,7 @@ export const bookCovers = {
     dune: new URL('./book-covers/dune.jpeg', import.meta.url),
     duneMessiah: new URL('./book-covers/dune-messiah.jpeg', import.meta.url),
     elantris: new URL('./book-covers/elantris.jpg', import.meta.url),
+    empireOfSilence: new URL('./book-covers/empire-of-silence.jpg', import.meta.url),
     eyeOfTheWorld: new URL('./book-covers/eye-of-the-world.jpeg', import.meta.url),
     heroOfAges: new URL('./book-covers/hero-of-ages.webp', import.meta.url),
     hyperion: new URL('./book-covers/hyperion.jpg', import.meta.url),
@@ -53,4 +54,5 @@ export const patterns = {
     dragon: new URL('patterns/dragon-scales.jpg', import.meta.url),
     nebula: new URL('patterns/nebula.jpg', import.meta.url),
     needles: new URL('patterns/needles.jpg', import.meta.url),
+    sunSurface: new URL('patterns/sun-surface.jpg', import.meta.url),
 }
