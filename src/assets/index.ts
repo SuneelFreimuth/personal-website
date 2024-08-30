@@ -24,6 +24,7 @@ export const bookCovers = {
     empireOfSilence: new URL('./book-covers/empire-of-silence.jpg', import.meta.url),
     eyeOfTheWorld: new URL('./book-covers/eye-of-the-world.jpeg', import.meta.url),
     heroOfAges: new URL('./book-covers/hero-of-ages.webp', import.meta.url),
+    howlingDark: new URL('./book-covers/howling-dark.jpg', import.meta.url),
     hyperion: new URL('./book-covers/hyperion.jpg', import.meta.url),
     knifeOfDreams: new URL('./book-covers/knife-of-dreams.jpg', import.meta.url),
     lordOfChaos: new URL('./book-covers/lord-of-chaos.png', import.meta.url),

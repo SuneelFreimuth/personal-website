@@ -242,6 +242,14 @@ export const books: Book[] = [
         description: '',
         image: bookCovers.empireOfSilence,
         series: Series.SunEater,
+        state: S.Done,
+    },
+    {
+        title: 'Howling Dark',
+        author: 'Christopher Ruocchio',
+        description: '',
+        image: bookCovers.howlingDark,
+        series: Series.SunEater,
         state: S.InProgress,
     },
     // {
