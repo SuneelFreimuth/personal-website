@@ -20,6 +20,7 @@ import { DarkModeToggle } from './pages/components/DarkModeToggle'
 
 import './global.scss'
 import { Raytracer } from './pages/raytracer/Raytracer'
+import { Blog } from './pages/blog/Blog'
 
 
 declare global {
