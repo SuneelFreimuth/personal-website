@@ -18,6 +18,7 @@ export const bookCovers = {
     aGameOfThrones: new URL('./book-covers/a-game-of-thrones.jpeg', import.meta.url),
     aMemoryOfLight: new URL('./book-covers/a-memory-of-light.jpeg', import.meta.url),
     crossroadsOfTwilight: new URL('./book-covers/crossroads-of-twilight.png', import.meta.url),
+    demonInWhite: new URL('./book-covers/demon-in-white.jpg', import.meta.url),
     dune: new URL('./book-covers/dune.jpeg', import.meta.url),
     duneMessiah: new URL('./book-covers/dune-messiah.jpeg', import.meta.url),
     elantris: new URL('./book-covers/elantris.jpg', import.meta.url),

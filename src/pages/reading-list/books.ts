@@ -250,6 +250,14 @@ export const books: Book[] = [
         description: '',
         image: bookCovers.howlingDark,
         series: Series.SunEater,
+        state: S.Done,
+    },
+    {
+        title: 'Demon in White',
+        author: 'Christopher Ruocchio',
+        description: '',
+        image: bookCovers.demonInWhite,
+        series: Series.SunEater,
         state: S.InProgress,
     },
     // {
