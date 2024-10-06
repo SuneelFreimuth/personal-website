@@ -14,7 +14,7 @@ const SERIES_ID: { [s in Series]: string } = {
   [Series.Dune]: 'dune',
   [Series.Mistborn]: 'mistborn',
   [Series.WheelOfTime]: 'wheel-of-time',
-  [Series.IceAndFire]: 'ice-and-fire',
+  // [Series.IceAndFire]: 'ice-and-fire',
   [Series.StormlightArchive]: 'stormlight-archive',
   [Series.HyperionCantos]: 'hyperion-cantos',
   [Series.SunEater]: 'sun-eater',
@@ -24,7 +24,7 @@ const SERIES_FROM_ID: { [id: string]: Series } = {
   'dune': Series.Dune,
   'mistborn': Series.Mistborn,
   'wheel-of-time': Series.WheelOfTime,
-  'ice-and-fire': Series.IceAndFire,
+  // 'ice-and-fire': Series.IceAndFire,
   'stormlight-archive': Series.StormlightArchive,
   'hyperion-cantos': Series.HyperionCantos,
   'sun-eater': Series.SunEater,
@@ -34,13 +34,14 @@ const SERIES_TITLE: { [s in Series]: string } = {
   [Series.Dune]: 'Dune',
   [Series.Mistborn]: 'Mistborn',
   [Series.WheelOfTime]: 'The Wheel of Time',
-  [Series.IceAndFire]: 'A Song of Ice and Fire',
+  // [Series.IceAndFire]: 'A Song of Ice and Fire',
   [Series.StormlightArchive]: 'The Stormlight Archive',
   [Series.HyperionCantos]: 'Hyperion Cantos',
   [Series.SunEater]: 'Sun Eater',
 };
 
-const SERIES_LIST = Object.values(Series).sort() as Series[];
+const SERIES_LIST =
+  Object.values(Series).filter(s => s !== Series.IceAndFire).sort() as Series[];
 
 
 const BOOK_STATE_PRIORITY = {
