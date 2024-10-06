@@ -274,6 +274,14 @@ export const books: Book[] = [
         description: '',
         image: bookCovers.ashesOfMan,
         series: Series.SunEater,
+        state: S.Done,
+    },
+    {
+        title: 'The Dregs of Empire',
+        author: 'Christopher Ruocchio',
+        description: '',
+        image: bookCovers.theDregsOfEmpire,
+        series: Series.SunEater,
         state: S.InProgress,
     },
     // {
