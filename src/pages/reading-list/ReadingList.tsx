@@ -302,13 +302,13 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
         <Chip
           className={styles.seriesChip}
           fgColor='white'
-          bgColor='hsl(0deg, 0%, 20%)'
+          bgColor='hsl(0deg, 0%, 35%)'
           onClick={onClick}
           style={{
             backgroundImage: `url(${patterns.needles.href})`,
             backgroundSize: '250%',
             backgroundPosition: '47% 68%',
-            backgroundBlendMode: 'soft-light',
+            backgroundBlendMode: 'multiply',
           }}
         >
           <span>Hyperion Cantos</span>
@@ -320,12 +320,12 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
         <Chip
           className={styles.seriesChip}
           fgColor='white'
-          bgColor='hsl(0deg, 0%, 20%)'
+          bgColor='hsl(0deg, 0%, 90%)'
           onClick={onClick}
           style={{
-            backgroundImage: `url(${patterns.sunSurface.href})`,
-            backgroundSize: '200%',
-            backgroundPosition: '47% 68%',
+            backgroundImage: `url(${patterns.sun.href})`,
+            backgroundSize: '300%',
+            backgroundPosition: '50% 37%',
             // letterSpacing: '1px'
           }}
         >

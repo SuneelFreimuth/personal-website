@@ -155,10 +155,13 @@
       filter: drop-shadow(0px 3px 10px #111c);
 
       @media (min-width: $mobileWidth) {
+        $ease-in: cubic-bezier(0, 0, 0.4, 1);
+        $ease-out: ease-out;
+
         height: 250px;
         transition:
-          transform 0.2s,
-          filter 0.2s;
+          transform 0.3s $ease-out,
+          filter 0.3s $ease-out;
         cursor: pointer;
         transform: perspective(1000px) rotateY(15deg) rotateX(3deg);
         $shadow-color: #030307;
@@ -166,7 +169,10 @@
 
         &:hover {
           transform: scale(1.05);
-          filter: drop-shadow(-3px 5px 14px lighten($shadow-color, 10%));
+          filter: drop-shadow(0px 5px 13px #404040);
+          transition:
+            transform 0.2s $ease-in,
+            filter 0.2s $ease-in;
         }
       }
     }

@@ -20,6 +20,7 @@ export const bookCovers = {
     ashesOfMan: new URL('./book-covers/ashes-of-man.jpg', import.meta.url),
     crossroadsOfTwilight: new URL('./book-covers/crossroads-of-twilight.png', import.meta.url),
     demonInWhite: new URL('./book-covers/demon-in-white.jpg', import.meta.url),
+    disquietGods: new URL('./book-covers/disquiet-gods.jpg', import.meta.url),
     dune: new URL('./book-covers/dune.jpeg', import.meta.url),
     duneMessiah: new URL('./book-covers/dune-messiah.jpeg', import.meta.url),
     elantris: new URL('./book-covers/elantris.jpg', import.meta.url),
@@ -33,6 +34,7 @@ export const bookCovers = {
     lordOfChaos: new URL('./book-covers/lord-of-chaos.png', import.meta.url),
     mistborn: new URL('./book-covers/mistborn.jpg', import.meta.url),
     newSpring: new URL('./book-covers/new-spring.jpeg', import.meta.url),
+    theClosingOfTheAmericanMind: new URL('./book-covers/the-closing-of-the-american-mind.png', import.meta.url),
     theDragonReborn: new URL('./book-covers/the-dragon-reborn.jpeg', import.meta.url),
     theDregsOfEmpire: new URL('./book-covers/the-dregs-of-empire.png', import.meta.url),
     theFallOfHyperion: new URL('./book-covers/the-fall-of-hyperion.jpg', import.meta.url),
@@ -52,12 +54,12 @@ export const bookCovers = {
 
 export const patterns = {
     shinyGold: new URL('patterns/shiny-gold.jpg', import.meta.url),
-    mist: new URL('patterns/mist2.png', import.meta.url),
+    mist: new URL('patterns/mist2.png?width=300', import.meta.url),
     sand: new URL('patterns/sand.jpg', import.meta.url),
     highstorm: new URL('patterns/shallan.jpg', import.meta.url),
     ironThrone: new URL('patterns/iron-throne.jpg', import.meta.url),
     dragon: new URL('patterns/dragon-scales.jpg', import.meta.url),
     nebula: new URL('patterns/nebula.jpg', import.meta.url),
     needles: new URL('patterns/needles.jpg', import.meta.url),
-    sunSurface: new URL('patterns/sun-surface.jpg', import.meta.url),
+    sun: new URL('patterns/aia-0304.jpg', import.meta.url),
 }

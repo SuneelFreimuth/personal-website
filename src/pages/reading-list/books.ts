@@ -239,7 +239,7 @@ export const books: Book[] = [
     {
         title: 'Empire of Silence',
         author: 'Christopher Ruocchio',
-        description: '',
+        description: 'Book one of <em>Sun Eater</em>.',
         image: bookCovers.empireOfSilence,
         series: Series.SunEater,
         state: S.Done,
@@ -247,7 +247,7 @@ export const books: Book[] = [
     {
         title: 'Howling Dark',
         author: 'Christopher Ruocchio',
-        description: '',
+        description: 'Book two of <em>Sun Eater</em>.',
         image: bookCovers.howlingDark,
         series: Series.SunEater,
         state: S.Done,
@@ -255,7 +255,7 @@ export const books: Book[] = [
     {
         title: 'Demon in White',
         author: 'Christopher Ruocchio',
-        description: '',
+        description: 'Book three of <em>Sun Eater</em>.',
         image: bookCovers.demonInWhite,
         series: Series.SunEater,
         state: S.Done,
@@ -263,7 +263,7 @@ export const books: Book[] = [
     {
         title: 'Kingdoms of Death',
         author: 'Christopher Ruocchio',
-        description: '',
+        description: 'Book four of <em>Sun Eater</em>.',
         image: bookCovers.kingdomsOfDeath,
         series: Series.SunEater,
         state: S.Done,
@@ -271,7 +271,7 @@ export const books: Book[] = [
     {
         title: 'Ashes of Man',
         author: 'Christopher Ruocchio',
-        description: '',
+        description: 'Book five of <em>Sun Eater</em>.',
         image: bookCovers.ashesOfMan,
         series: Series.SunEater,
         state: S.Done,
@@ -279,17 +279,32 @@ export const books: Book[] = [
     {
         title: 'The Dregs of Empire',
         author: 'Christopher Ruocchio',
-        description: '',
+        description: 'Short story in the universe of <em>Sun Eater</em>.',
         image: bookCovers.theDregsOfEmpire,
         series: Series.SunEater,
+        state: S.Done,
+    },
+    {
+        title: 'Disquiet Gods',
+        author: 'Christopher Ruocchio',
+        description: 'Book six of <em>Sun Eater</em>.',
+        image: bookCovers.disquietGods,
+        series: Series.SunEater,
+        state: S.Done,
+    },
+    {
+        title: 'Words of Radiance',
+        author: 'Brandon Sanderson',
+        description: 'Second book of <em>The Stormlight Archive</em>.',
+        image: bookCovers.wordsOfRadiance,
+        series: Series.StormlightArchive,
         state: S.InProgress,
     },
-    // {
-    //     title: 'Words of Radiance',
-    //     author: 'Brandon Sanderson',
-    //     description: 'Second book of <em>The Stormlight Archive</em>.',
-    //     image: bookCovers.wordsOfRadiance,
-    //     series: Series.StormlightArchive,
-    //     state: S.InProgress,
-    // },
+    {
+        title: 'The Closing of the American Mind',
+        author: 'Allan Bloom',
+        description: '',
+        image: bookCovers.theClosingOfTheAmericanMind,
+        state: S.InProgress,
+    },
 ]
