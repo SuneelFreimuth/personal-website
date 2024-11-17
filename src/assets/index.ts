@@ -41,6 +41,7 @@ export const bookCovers = {
     theFiresOfHeaven: new URL('./book-covers/the-fires-of-heaven.jpg', import.meta.url),
     theGatheringStorm: new URL('./book-covers/the-gathering-storm.jpeg', import.meta.url),
     theGreatHunt: new URL('./book-covers/the-great-hunt.jpeg', import.meta.url),
+    theMythicalManMonth: new URL('./book-covers/the-mythical-man-month.png', import.meta.url),
     thePathOfDaggers: new URL('./book-covers/the-path-of-daggers.jpeg', import.meta.url),
     theShadowRising: new URL('./book-covers/the-shadow-rising.jpg', import.meta.url),
     theWayOfKings: new URL('./book-covers/the-way-of-kings.jpg', import.meta.url),

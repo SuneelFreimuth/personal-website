@@ -298,6 +298,13 @@ export const books: Book[] = [
         description: 'Second book of <em>The Stormlight Archive</em>.',
         image: bookCovers.wordsOfRadiance,
         series: Series.StormlightArchive,
+        state: S.Done,
+    },
+    {
+        title: 'The Mythical Man-Month',
+        author: 'Frederick Brooks',
+        image: bookCovers.theMythicalManMonth,
+        description: 'Why are large software projects so often drawn into a "tar pit," falling behind schedule and far exceeding their budget? Fred Brooks outlines strategies and guidelines large software teams can implement to maintain velocity, streamline communication, and preserve conceptual integrity.',
         state: S.InProgress,
     },
     {
