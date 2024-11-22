@@ -301,6 +301,20 @@ export const books: Book[] = [
         state: S.Done,
     },
     {
+        title: 'The Coddling of the American Mind',
+        author: 'Greg Lukianoff & Jonathan Haidt',
+        description: '',
+        image: bookCovers.theCoddlingOfTheAmericanMind,
+        state: S.Done,
+    },
+    {
+        title: 'The Anxious Generation',
+        author: 'Jonathan Haidt',
+        description: '',
+        image: bookCovers.theAnxiousGeneration,
+        state: S.InProgress,
+    },
+    {
         title: 'The Mythical Man-Month',
         author: 'Frederick Brooks',
         image: bookCovers.theMythicalManMonth,
@@ -314,4 +328,4 @@ export const books: Book[] = [
         image: bookCovers.theClosingOfTheAmericanMind,
         state: S.InProgress,
     },
-]
+];
