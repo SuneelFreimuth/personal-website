@@ -14,7 +14,7 @@ const SERIES_ID: { [s in Series]: string } = {
   [Series.Dune]: 'dune',
   [Series.Mistborn]: 'mistborn',
   [Series.WheelOfTime]: 'wheel-of-time',
-  // [Series.IceAndFire]: 'ice-and-fire',
+  [Series.IceAndFire]: 'ice-and-fire',
   [Series.StormlightArchive]: 'stormlight-archive',
   [Series.HyperionCantos]: 'hyperion-cantos',
   [Series.SunEater]: 'sun-eater',
@@ -24,7 +24,7 @@ const SERIES_FROM_ID: { [id: string]: Series } = {
   'dune': Series.Dune,
   'mistborn': Series.Mistborn,
   'wheel-of-time': Series.WheelOfTime,
-  // 'ice-and-fire': Series.IceAndFire,
+  'ice-and-fire': Series.IceAndFire,
   'stormlight-archive': Series.StormlightArchive,
   'hyperion-cantos': Series.HyperionCantos,
   'sun-eater': Series.SunEater,
@@ -34,7 +34,7 @@ const SERIES_TITLE: { [s in Series]: string } = {
   [Series.Dune]: 'Dune',
   [Series.Mistborn]: 'Mistborn',
   [Series.WheelOfTime]: 'The Wheel of Time',
-  // [Series.IceAndFire]: 'A Song of Ice and Fire',
+  [Series.IceAndFire]: 'A Song of Ice and Fire',
   [Series.StormlightArchive]: 'The Stormlight Archive',
   [Series.HyperionCantos]: 'Hyperion Cantos',
   [Series.SunEater]: 'Sun Eater',
@@ -78,6 +78,7 @@ export function ReadingList() {
 
   return (
     <div className={styles.readingList}>
+      <CoverStack books={books.filter(({ series }) => series === Series.Mistborn)}/>
       <h1>Reading List</h1>
       <p>Books I'm reading and books I've read.</p>
       <div className={styles.seriesChips}>
@@ -129,6 +130,72 @@ export function ReadingList() {
           }}
         />
       </Fade>
+    </div>
+  );
+}
+
+function CoverStack({ books }: { books: Array<Book> }) {
+  const [hovered, setHovered] = useState(false);
+
+  const padding = '15px';
+  const aspectRatio = 6 / 10;
+  const coverHeight = 350;
+  const coverWidth = Math.floor(aspectRatio * coverHeight);
+  // const coverHeight = 100;
+  // const coverWidth = 100;
+
+  return (
+    <div
+      className={styles.coverStack}
+      style={{
+        maxWidth: '650px',
+      }}
+      onMouseOver={() => {
+        setHovered(true);
+      }}
+      onMouseOut={() => {
+        setHovered(false);
+      }}
+    >
+      <div
+        style={{
+          width: 'min-content',
+          backgroundImage: `url(${patterns.mist.href})`,
+          backgroundSize: '200%',
+          backgroundPosition: '100%',
+          borderRadius: '10px',
+          padding,
+          backgroundColor: '#a0a9aa'
+        }}
+      >
+        {books.map((book, i) => {
+          const style =
+            hovered ?
+              {
+                zIndex: 50 - i,
+                left: `calc(${i * 100 / books.length}%)`,
+                transform: `none`,
+                width: coverWidth,
+                height: coverHeight,
+              } :
+              {
+                zIndex: 50 - i,
+                left: `calc(${20 * i}px)`,
+                transform: `perspective(1000px) rotateY(-15deg) scale(${1 - 0.01 * i})`,
+                width: coverWidth,
+                height: coverHeight,
+              };
+          return (
+            <img
+              src={book.image.href}
+              style={style}
+              width={coverWidth}
+              height={coverHeight}
+              key={`coverStack${i}`}
+            />
+          )
+        })}
+      </div>
     </div>
   );
 }

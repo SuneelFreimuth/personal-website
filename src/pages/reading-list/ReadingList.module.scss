@@ -104,6 +104,28 @@
 }
 
 
+.coverStack {
+  $transitionDuration: 0.4s;
+
+  position: relative;
+  transition: width $transitionDuration;
+  cursor: pointer;
+
+  img:first-child {
+    position: relative;
+  }
+
+  img {
+    position: absolute;
+    transform: perspective(1000px) rotateY(-15deg);
+    transition:
+      left $transitionDuration,
+      transform $transitionDuration;
+    object-fit: cover;
+  }
+}
+
+
 .bookEntry {
   display: grid;
   grid-template-columns: auto 1fr;
