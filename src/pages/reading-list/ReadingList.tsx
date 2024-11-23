@@ -147,7 +147,7 @@ function ImageStack({ images }: { images: Array<URL> }) {
 
   return (
     <div
-      className={styles.coverStack}
+      className={styles.imageStack}
       onMouseOver={() => {
         setHovered(true);
       }}
