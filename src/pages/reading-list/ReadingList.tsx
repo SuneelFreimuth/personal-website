@@ -78,7 +78,6 @@ export function ReadingList() {
 
   return (
     <div className={styles.readingList}>
-      <CoverStack books={books.filter(({ series }) => series === Series.Mistborn)}/>
       <h1>Reading List</h1>
       <p>Books I'm reading and books I've read.</p>
       <div className={styles.seriesChips}>
@@ -134,22 +133,21 @@ export function ReadingList() {
   );
 }
 
-function CoverStack({ books }: { books: Array<Book> }) {
+function ImageStack({ images }: { images: Array<URL> }) {
   const [hovered, setHovered] = useState(false);
 
-  const padding = '15px';
-  const aspectRatio = 6 / 10;
-  const coverHeight = 350;
-  const coverWidth = Math.floor(aspectRatio * coverHeight);
-  // const coverHeight = 100;
-  // const coverWidth = 100;
+  // const padding = '15px';
+  // const aspectRatio = 6 / 10;
+  // const coverHeight = 350;
+  // const coverWidth = Math.floor(aspectRatio * coverHeight);
+  const coverHeight = '400px';
+  const coverWidth = 'auto';
+  // const coverHeight = 200;
+  // const coverWidth = 200;
 
   return (
     <div
       className={styles.coverStack}
-      style={{
-        maxWidth: '650px',
-      }}
       onMouseOver={() => {
         setHovered(true);
       }}
@@ -157,45 +155,31 @@ function CoverStack({ books }: { books: Array<Book> }) {
         setHovered(false);
       }}
     >
-      <div
-        style={{
-          width: 'min-content',
-          backgroundImage: `url(${patterns.mist.href})`,
-          backgroundSize: '200%',
-          backgroundPosition: '100%',
-          borderRadius: '10px',
-          padding,
-          backgroundColor: '#a0a9aa'
-        }}
-      >
-        {books.map((book, i) => {
-          const style =
-            hovered ?
-              {
-                zIndex: 50 - i,
-                left: `calc(${i * 100 / books.length}%)`,
-                transform: `none`,
-                width: coverWidth,
-                height: coverHeight,
-              } :
-              {
-                zIndex: 50 - i,
-                left: `calc(${20 * i}px)`,
-                transform: `perspective(1000px) rotateY(-15deg) scale(${1 - 0.01 * i})`,
-                width: coverWidth,
-                height: coverHeight,
-              };
-          return (
-            <img
-              src={book.image.href}
-              style={style}
-              width={coverWidth}
-              height={coverHeight}
-              key={`coverStack${i}`}
-            />
-          )
-        })}
-      </div>
+      {images.map((image, i) => {
+        const style =
+          hovered ?
+            {
+              zIndex: images.length - i,
+              left: `calc(${i * 100 / images.length}%)`,
+              transform: `none`,
+              width: coverWidth,
+              height: coverHeight,
+            } :
+            {
+              zIndex: images.length - i,
+              left: `calc(${20 * i}px)`,
+              transform: `perspective(1000px) rotateY(-15deg) scale(${1 - 0.01 * i})`,
+              width: coverWidth,
+              height: coverHeight,
+            };
+        return (
+          <img
+            src={image.href}
+            style={style}
+            key={`coverStack${i}`}
+          />
+        )
+      })}
     </div>
   );
 }
