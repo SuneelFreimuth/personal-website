@@ -18,6 +18,7 @@ const SERIES_ID: { [s in Series]: string } = {
   [Series.StormlightArchive]: 'stormlight-archive',
   [Series.HyperionCantos]: 'hyperion-cantos',
   [Series.SunEater]: 'sun-eater',
+  [Series.FirstLaw]: 'first-law',
 };
 
 const SERIES_FROM_ID: { [id: string]: Series } = {
@@ -28,6 +29,7 @@ const SERIES_FROM_ID: { [id: string]: Series } = {
   'stormlight-archive': Series.StormlightArchive,
   'hyperion-cantos': Series.HyperionCantos,
   'sun-eater': Series.SunEater,
+  'first-law': Series.FirstLaw,
 };
 
 const SERIES_TITLE: { [s in Series]: string } = {
@@ -38,6 +40,7 @@ const SERIES_TITLE: { [s in Series]: string } = {
   [Series.StormlightArchive]: 'The Stormlight Archive',
   [Series.HyperionCantos]: 'Hyperion Cantos',
   [Series.SunEater]: 'Sun Eater',
+  [Series.FirstLaw]: 'The First Law',
 };
 
 const SERIES_LIST =
@@ -211,9 +214,8 @@ function BookEntry({
         />
       </div>
       <div className={styles.bookDetails}>
-        <h4>{author}</h4>
         <h3>{title}</h3>
-        <p dangerouslySetInnerHTML={{ __html: description }}/>
+        <h4>{author}</h4>
         <div className={styles.chips}>
           {when(
             isSome(series),
@@ -224,6 +226,7 @@ function BookEntry({
           )}
           <StateChip state={state}/>
         </div>
+        <p dangerouslySetInnerHTML={{ __html: description }}/>
       </div>
     </div>
   );
@@ -381,6 +384,25 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
           }}
         >
           <span>Sun Eater</span>
+        </Chip>
+      );
+
+    case Series.FirstLaw:
+      return (
+        <Chip
+          className={styles.seriesChip}
+          fgColor='white'
+          bgColor='hsl(0deg, 0%, 90%)'
+          onClick={onClick}
+          style={{
+            backgroundImage: `url(${patterns.blood.href})`,
+            backgroundSize: '171%',
+            // backgroundPosition: '100% 53%',
+            backgroundPosition: '40% 76%',
+            // letterSpacing: '1px'
+          }}
+        >
+          <span>The First Law</span>
         </Chip>
       );
   }

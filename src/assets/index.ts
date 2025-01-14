@@ -38,6 +38,8 @@ export const bookCovers = {
     lordOfChaos: new URL('./book-covers/lord-of-chaos.png', import.meta.url),
     mistborn: new URL('./book-covers/mistborn.jpg', import.meta.url),
     newSpring: new URL('./book-covers/new-spring.jpeg', import.meta.url),
+    redCountry: new URL('./book-covers/red-country.webp', import.meta.url),
+    sharpEnds: new URL('./book-covers/sharp-ends.jpg', import.meta.url),
     theAnxiousGeneration: new URL('./book-covers/the-anxious-generation.jpg', import.meta.url),
     theBladeItself: new URL('./book-covers/the-blade-itself.jpg', import.meta.url),
     theClosingOfTheAmericanMind: new URL('./book-covers/the-closing-of-the-american-mind.png', import.meta.url),
@@ -71,4 +73,6 @@ export const patterns = {
     nebula: new URL('patterns/nebula.jpg', import.meta.url),
     needles: new URL('patterns/needles.jpg', import.meta.url),
     sun: new URL('patterns/aia-0304.jpg', import.meta.url),
+    blood: new URL('patterns/bloody-handprint.jpg', import.meta.url),
+    // blood: new URL('patterns/blood.jpg', import.meta.url),
 }
