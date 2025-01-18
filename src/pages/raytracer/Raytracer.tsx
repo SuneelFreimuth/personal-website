@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import { useDarkMode } from '../components/DarkModeContext';
 import styles from './Raytracer.module.scss';
 import { isSome, when } from '../lib';
-import { Connection, Message, ConnectionEvent, PixelsMessage } from './connection';
+import { Connection, Message, PixelsMessage } from './connection';
 
 
 const WIDTH = 600;
@@ -93,7 +93,7 @@ export function Raytracer() {
 
   async function onMessage(msg: Message) {
     switch (msg.type) {
-      case ConnectionEvent.Pixels:
+      case 'pixels':
         if (!isSome(renderJobRef.current))
           break;
         const renderJob = renderJobRef.current;
@@ -118,7 +118,7 @@ export function Raytracer() {
     }
   }
 
-  function onConnectionClose(e: CloseEvent) {
+  function onConnectionClose(_) {
     toast('Connection to server closed.', {
       type: 'error',
       position: 'bottom-center',
@@ -143,8 +143,8 @@ export function Raytracer() {
     const connection = new Connection({
       url: SERVER,
     });
-    connection.addEventListener(ConnectionEvent.Pixels, onMessage);
-    connection.addEventListener(ConnectionEvent.Close, onConnectionClose);
+    connection.addEventListener('pixels', onMessage);
+    connection.addEventListener('close', onConnectionClose);
     connectionRef.current = connection;
     return () => {
       connection.close();
@@ -176,10 +176,6 @@ export function Raytracer() {
           setSpp={setSpp}
           onSubmit={onSettingsSubmit}
         />
-        {/* {when(
-          isSome(error),
-          <div style={{ color: 'red' }}>{error}</div>
-        )} */}
       </div>
       <div className={styles.resultsArea}>
         {when(

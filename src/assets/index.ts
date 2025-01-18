@@ -16,6 +16,7 @@ export const icons = {
 export const bookCovers = {
     aCrownOfSwords: new URL('./book-covers/a-crown-of-swords.jpeg', import.meta.url),
     aGameOfThrones: new URL('./book-covers/a-game-of-thrones.jpeg', import.meta.url),
+    aLittleHatred: new URL('./book-covers/a-little-hatred.jpg', import.meta.url),
     aMemoryOfLight: new URL('./book-covers/a-memory-of-light.jpeg', import.meta.url),
     annaKarenina: new URL('./book-covers/anna-karenina.jpg', import.meta.url),
     ashesOfMan: new URL('./book-covers/ashes-of-man.jpg', import.meta.url),

@@ -32,6 +32,6 @@ interface ChipProps {
   children: any,
   bgColor: string,
   fgColor: string,
-  onClick: Function,
+  onClick: () => void,
   style: CSSProperties,
 }

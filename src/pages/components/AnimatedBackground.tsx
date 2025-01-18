@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, EffectCallback } from 'react'
 
-import { debounce } from '../lib'
+import { debounce } from '../lib';
 
 export function AnimatedBackground({ setup, draw }: {
   setup: (ctx: CanvasRenderingContext2D) => void,
