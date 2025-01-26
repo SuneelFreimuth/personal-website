@@ -1,17 +1,12 @@
-import { isSome } from "../lib";
-
-
-export enum ConnectionEvent {
-    Pixels = 'pixels',
-    Close = 'close'
-}
+export type MessageType = 'pixels' | 'close';
 
 
 export interface Message {
-    type: ConnectionEvent,
+    type: MessageType,
 }
 
 export interface PixelsMessage extends Message {
+    type: 'pixels',
     x: number,
     y: number,
     numPixels: number,
@@ -25,7 +20,7 @@ function deserializeMessage(data: ArrayBufferLike): Message {
         default:
             const numPixels = view.getUint8(1);
             return {
-                type: ConnectionEvent.Pixels,
+                type: 'pixels',
                 numPixels,
                 x: view.getUint16(2, true),
                 y: view.getUint16(4, true),
@@ -34,47 +29,40 @@ function deserializeMessage(data: ArrayBufferLike): Message {
     }
 }
 
+type MessageHandler = (msg: Message) => void;
 
-type EventHandler = (event: ConnectionEvent) => void;
 
-type Listeners = {
-    [event in ConnectionEvent]: EventHandler[];
-};
-
-interface ConnectionConfig {
+interface ConnectionOptions {
     url: URL,
 }
 
 export class Connection {
     static DEFAULT_HEARTBEAT = 1;
 
-    public socket: WebSocket;
-    public heartbeat: number
-    listeners: Listeners;
+    socket: WebSocket;
+    heartbeat: number
+    listeners: Record<MessageType, MessageHandler[]>;
 
-    constructor({ url }: ConnectionConfig) {
-        const listeners = {};
-        for (const event of Object.values(ConnectionEvent))
-            listeners[event] = [];
-        this.listeners = listeners as Listeners;
+    constructor({ url }: ConnectionOptions) {
+        this.listeners = {
+            'pixels': [],
+            'close': [],
+        };
 
         const socket = new WebSocket(url);
         socket.binaryType = 'arraybuffer';
-
         socket.addEventListener('open', e => {
             console.log('Connected to server.');
         });
-
         socket.addEventListener('close', e => {
-            for (const listener of this.listeners[ConnectionEvent.Close])
-                listener(e);
+            for (const listener of this.listeners['close'])
+                listener({ type: 'close' });
         });
-
         socket.addEventListener('message', e => {
-            for (const listener of this.listeners[ConnectionEvent.Pixels])
+            console.log('Received message:', e.data);
+            for (const listener of this.listeners['pixels'])
                 listener(deserializeMessage(e.data));
         });
-
         this.socket = socket;
     }
 
@@ -89,17 +77,11 @@ export class Connection {
     isOpen = () =>
         this.socket.readyState === WebSocket.OPEN;
 
-    addEventListener = (type: ConnectionEvent, handler: MessageHandler) => {
-        if (isSome(this.listeners[type])) {
-            this.listeners[type].push(handler);
-        } else {
-            this.listeners[type] = [handler];
-        }
+    addEventListener = (type: MessageType, handler: MessageHandler) => {
+        this.listeners[type].push(handler);
     }
 
-    removeEventListener = (type: ConnectionEvent, handler: MessageHandler) => {
-        if (!isSome(this.listeners[type]))
-            return;
+    removeEventListener = (type: MessageType, handler: MessageHandler) => {
         const i = this.listeners[type].indexOf(handler);
         this.listeners[type].splice(i, 1);
     }

@@ -10,7 +10,7 @@ import { Connection, Message, PixelsMessage } from './connection';
 
 const WIDTH = 600;
 const HEIGHT = 450;
-const SERVER = new URL("ws://127.0.0.1:8080");
+const SERVER = new URL("ws://192.168.1.36:8080");
 
 const SCENE_OPTIONS = [
   ["Cornell Box", "cornell_box"],
@@ -91,7 +91,7 @@ export function Raytracer() {
     setRendering(false);
   }
 
-  async function onMessage(msg: Message) {
+  async function onPixels(msg: Message) {
     switch (msg.type) {
       case 'pixels':
         if (!isSome(renderJobRef.current))
@@ -136,6 +136,11 @@ export function Raytracer() {
   };
 
   useEffect(() => {
+    if (connectionRef.current?.isOpen())
+      return;
+
+    console.log('asiodjosaijd')
+
     const ctx = canvasRef.current!.getContext('2d')!;
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -143,7 +148,7 @@ export function Raytracer() {
     const connection = new Connection({
       url: SERVER,
     });
-    connection.addEventListener('pixels', onMessage);
+    connection.addEventListener('pixels', onPixels);
     connection.addEventListener('close', onConnectionClose);
     connectionRef.current = connection;
     return () => {
@@ -277,51 +282,3 @@ function ImageBitmapView({ bitmap }: {
   );
 }
 
-
-function About() {
-  const [isOpen, setIsOpen] = useState(false);
-  const btnRef = useRef(null as HTMLButtonElement | null);
-
-  return (
-    <>
-      {/* <IconButton 
-        ref={btnRef}
-        variant='solid'
-        aria-label='Color mode toggle'
-        rounded='full'
-        size='sm'
-        icon={<FaInfoCircle/>}
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      />
-      <Drawer
-        isOpen={isOpen}
-        placement='left'
-        size='full'
-        onClose={() => {
-          setIsOpen(false);
-        }}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay/>
-        <DrawerContent>
-          <DrawerCloseButton
-            position='relative'
-            top={2}
-            left={4}
-          />
-          <DrawerBody>
-            <Container>
-              <VStack spacing={4} align='left'>
-                <Heading size='3xl'>About</Heading>
-                <Text fontSize='xl'>Frontend for a raytracer written in Rust.</Text>
-                <Heading size='lg'>How it Works</Heading>
-              </VStack>
-            </Container>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer> */}
-    </>
-  )
-}
