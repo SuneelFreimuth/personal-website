@@ -20,6 +20,7 @@ import { DarkModeToggle } from './pages/components/DarkModeToggle'
 
 import './global.scss'
 import { Raytracer } from './pages/raytracer/Raytracer'
+import { FlowField } from './pages/flow/FlowField'
 
 
 declare global {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
             path: '/books',
             element: <ReadingList/>,
           },
+          {
+            path: '/flow',
+            element: <FlowField/>,
+          }
           // {
           //   path: '/raytracer',
           //   element: <Raytracer/>,
