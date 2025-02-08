@@ -16,6 +16,9 @@ function DesktopNav() {
     <div className={styles.desktopNav}>
       <h1><NavLinkStyled to="/" end>Suneel Freimuth</NavLinkStyled></h1>
       <nav>
+        <Link to="/flow" className={styles.glassButton}>
+          <span>Simulations</span>
+        </Link>
         <Link to="/reading" className={styles.glassButton}>
           <span><span style={{ zIndex: 3 }}>📚</span> Reading</span>
         </Link>

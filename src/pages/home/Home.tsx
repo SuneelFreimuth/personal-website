@@ -14,6 +14,9 @@ export function Home() {
       <TreeAnimation />
       <h1>Suneel Freimuth</h1>
       <div>
+        <Link to="/flow" className={navStyles.glassButton}>
+          <span>Simulations</span>
+        </Link>
         <Link to="/reading" className={navStyles.glassButton}>
           <span><span style={{ zIndex: 3 }}>📚</span> Reading</span>
         </Link>
