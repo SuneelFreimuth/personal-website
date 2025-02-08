@@ -1,6 +1,7 @@
-import { memo, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Animation, Ctx, InputObserver } from './Animation';
 import { createNoise3D, NoiseFunction3D } from 'simplex-noise';
+import { useDarkMode } from '../components/DarkModeContext';
 
 
 const colorSchemes: Record<string, ColorScheme> = {
@@ -23,6 +24,7 @@ const NUM_PARTICLES = 2e4;
 export function FlowField() {
   const simulationRef = useRef<Simulation | null>(null);
   const rendererRef = useRef<Renderer | null>(null);
+  const { darkModeOn } = useDarkMode();
 
   function simulation(): Simulation {
     if (simulationRef.current)
@@ -48,6 +50,10 @@ export function FlowField() {
 
   const frameRate = useFrameRate({ history: 10 });
 
+  useEffect(() => {
+    renderer().colorScheme = darkModeOn ? colorSchemes.purple : colorSchemes.graphite;
+  }, [darkModeOn]);
+
   return (
     <div style={{
       width: '100vw',
@@ -61,7 +67,8 @@ export function FlowField() {
           frameRate.update(dt);
           const { width, height } = ctx.canvas;
 
-          renderer().draw(ctx, t, dt, inputs);
+          const r = renderer();
+          r.draw(ctx, t, dt, inputs);
         }}
       />
       <div style={{
@@ -70,6 +77,7 @@ export function FlowField() {
         bottom: '20px',
         backgroundColor: 'black',
         color: 'white',
+        fontFamily: 'Inter'
       }}>
         <table>
           <tbody>
@@ -79,13 +87,35 @@ export function FlowField() {
             </tr>
             <tr>
               <td>Particles:</td>
-              <td style={{ minWidth: '40px'}}>{simulation().bodies.numBodies}</td>
+              <td style={{ minWidth: '40px'}}>{withCommas(simulation().bodies.numBodies)}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   );
+}
+
+function withCommas(int: number): string {
+  let chars = [] as string[];
+  let i = 0;
+  for (const digit of digits(int)) {
+    chars.push(digit.toString());
+    i++;
+    if (i === 3) {
+      chars.push(',');
+      i = 0;
+    }
+  }
+  return chars.reverse().join('');
+}
+
+function* digits(int: number): Generator<number> {
+  int = Math.trunc(int);
+  while (int > 0) {
+    yield int % 10;
+    int = Math.trunc(int / 10);
+  }
 }
 
 const AnimationMemoized = memo(Animation);
@@ -172,10 +202,10 @@ class Renderer {
     this.drawForceField(ctx);
     this.drawParticles(ctx);
 
-    ctx.fillStyle = inputs.buttons.primary ? 'red' : 'blue';
-    ctx.beginPath();
-    ctx.ellipse(inputs.mouseX, inputs.mouseY, 10, 10, 0, 0, 2 * Math.PI);
-    ctx.fill();
+    // ctx.fillStyle = inputs.buttons.primary ? 'red' : 'blue';
+    // ctx.beginPath();
+    // ctx.ellipse(inputs.mouseX, inputs.mouseY, 10, 10, 0, 0, 2 * Math.PI);
+    // ctx.fill();
   }
 
   drawForceField = (ctx: Ctx) => {
