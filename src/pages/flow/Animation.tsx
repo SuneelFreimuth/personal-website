@@ -36,7 +36,9 @@ export function Animation({ width, height, setup, draw }: {
     });
 
     return () => {
-      inputs.unobserve(canvas.current!);
+      if (canvas.current) {
+        inputs.unobserve(canvas.current);
+      }
       cancelAnimationFrame(animationFrame)
     };
   }, [canvas.current]);
