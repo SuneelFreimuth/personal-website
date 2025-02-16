@@ -41,6 +41,7 @@ export const bookCovers = {
     newSpring: new URL('./book-covers/new-spring.jpeg', import.meta.url),
     redCountry: new URL('./book-covers/red-country.webp', import.meta.url),
     sharpEnds: new URL('./book-covers/sharp-ends.jpg', import.meta.url),
+    theAlloyOfLaw: new URL('./book-covers/the-alloy-of-law.jpg', import.meta.url),
     theAnxiousGeneration: new URL('./book-covers/the-anxious-generation.jpg', import.meta.url),
     theBladeItself: new URL('./book-covers/the-blade-itself.jpg', import.meta.url),
     theClosingOfTheAmericanMind: new URL('./book-covers/the-closing-of-the-american-mind.png', import.meta.url),
