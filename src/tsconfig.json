@@ -4,6 +4,7 @@
         "target": "ES6",
         "module": "ES2022",
         "moduleResolution": "node",
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "lib": ["DOM", "ES2023"]
     }
 }

@@ -1,16 +1,11 @@
 import './declarations.d'
 
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { useMatch, Outlet } from 'react-router'
+import { Outlet } from 'react-router'
 import {
   createBrowserRouter,
   RouterProvider,
-} from 'react-router-dom'
-
-// import 'react-tooltip/dist/react-tooltip.css'
-// import 'katex/dist/katex.min.css'
-// import '@catppuccin/highlightjs/css/catppuccin-mocha.css'
+} from 'react-router'
 
 import { Nav } from './pages/components/Nav'
 import { Home } from './pages/home/Home'
@@ -19,7 +14,6 @@ import { DarkModeProvider } from './pages/components/DarkModeContext'
 import { DarkModeToggle } from './pages/components/DarkModeToggle'
 
 import './global.scss'
-import { Raytracer } from './pages/raytracer/Raytracer'
 import { FlowField } from './pages/flow/FlowField'
 
 

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext, type PropsWithChildren } from 'react';
 
 
 export const DarkModeContext = createContext({
@@ -6,7 +6,7 @@ export const DarkModeContext = createContext({
   setDarkModeOn: (_: boolean) => {}
 });
 
-export function DarkModeProvider({ children }) {
+export function DarkModeProvider({ children }: PropsWithChildren<{}>) {
   const [darkModeOn, setDarkModeOn] = useState(false);
 
   useEffect(() => {

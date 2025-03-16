@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { Color, randomHsl, random, lerp, hslToRgb, rgbString as rgbString, lerpColors, map } from '../lib'
 

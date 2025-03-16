@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useState, useEffect, ComponentProps } from 'react';
+import { useSearchParams } from 'react-router';
 
 import { books, Book, BookState, Series } from './books';
 import { Chip } from '../components/Chip';
@@ -193,8 +193,8 @@ function BookEntry({
   onSeriesChipClick
 }: {
   book: Book,
-  onCoverClick: Function,
-  onSeriesChipClick: Function,
+  onCoverClick: () => void,
+  onSeriesChipClick: () => void,
 }) {
   return (
     <div className={cn(
@@ -210,7 +210,11 @@ function BookEntry({
           src={image.href}
           alt={`Cover of the book ${title} by ${author}`}
           aria-label={`Cover of the book ${title} by ${author}`}
-          onClick={onMobile() ? undefined : onCoverClick}
+          onClick={() => {
+            if (!onMobile()) {
+              onCoverClick();
+            }
+          }}
         />
       </div>
       <div className={styles.bookDetails}>
@@ -243,7 +247,7 @@ function StateChip({ state }: { state: BookState }) {
   }
 }
 
-function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) {
+function SeriesChip({ series, onClick }: ComponentProps<'span'> & { series: Series }) {
   switch (series) {
     case Series.WheelOfTime:
       return (
@@ -409,9 +413,9 @@ function SeriesChip({ series, onClick }: { series: Series, onClick: Function }) 
 }
 
 function FocusedImage({ className, image, onClose }: {
-  className?: string,
-  image: URL,
-  onClose: Function,
+  className?: string;
+  image: URL;
+  onClose: () => void;
 }) {
   const [image_, setImage_] = useState(image);
 

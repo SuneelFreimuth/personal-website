@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { ComponentProps, CSSProperties, StyleHTMLAttributes } from 'react';
 import { cn, isSome } from '../lib';
 import styles from './Chip.module.scss';
 
@@ -6,11 +6,14 @@ import styles from './Chip.module.scss';
 export function Chip({
   className,
   children,
-  bgColor,
-  fgColor,
+  fgColor = '#000',
+  bgColor = '#FFF',
   onClick,
   style,
-}: Partial<ChipProps>) {
+}: ComponentProps<'span'> & {
+  fgColor?: string;
+  bgColor?: string;
+}) {
   return (
     <span
       className={cn(styles.chip, className)}
@@ -25,13 +28,4 @@ export function Chip({
       {children}
     </span>
   );
-}
-
-interface ChipProps {
-  className: string,
-  children: any,
-  bgColor: string,
-  fgColor: string,
-  onClick: () => void,
-  style: CSSProperties,
 }

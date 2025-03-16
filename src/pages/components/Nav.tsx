@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { useState } from 'react';
+import { NavLink, Link } from 'react-router';
 
 import styles from './Nav.module.scss'
 
@@ -28,9 +28,9 @@ function DesktopNav() {
             Github
           </span>
         </a>
-        <Link to="/resume.pdf" reloadDocument className={styles.glassButton}>
+        {/* <Link to="/resume.pdf" reloadDocument className={styles.glassButton}>
           <span>Resume</span>
-        </Link>
+        </Link> */}
       </nav>
     </div>
   )
@@ -69,9 +69,9 @@ function MobileNav() {
             <a href="https://github.com/SuneelFreimuth">
               <span>Github</span>
             </a>
-            <Link to="/resume.pdf" reloadDocument>
+            {/* <Link to="/resume.pdf" reloadDocument>
               <span>Resume</span>
-            </Link>
+            </Link> */}
           </div>
         </div>
       )}

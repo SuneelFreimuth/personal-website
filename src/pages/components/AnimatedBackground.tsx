@@ -7,7 +7,7 @@ export function AnimatedBackground({ setup, draw }: {
   draw: (ctx: CanvasRenderingContext2D, frameCount: number) => void,
 }) {
   const viewportSize = useViewportSize()
-  const canvasRef = useRef()
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const fitCanvasToViewport = debounce(200, () => {
     if (canvasRef.current) {
@@ -21,16 +21,18 @@ export function AnimatedBackground({ setup, draw }: {
     if (!canvasRef.current)
       return
     const canvas: HTMLCanvasElement = canvasRef.current;
-    fitCanvasToViewport()
-    const ctx = canvas.getContext('2d')
+    fitCanvasToViewport();
+    const ctx = canvas.getContext('2d');
+    if (!ctx)
+      throw new Error('Failed to obtain 2D context from canvas');
     setup(ctx);
 
     let frameId;
     let frameCount = 0;
     (function animate() {
-      draw(ctx, frameCount)
-      frameCount++
-      frameId = requestAnimationFrame(animate)
+      draw(ctx, frameCount);
+      frameCount++;
+      frameId = requestAnimationFrame(animate);
     })();
 
     return () => {
