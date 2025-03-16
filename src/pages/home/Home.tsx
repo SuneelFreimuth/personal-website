@@ -26,7 +26,7 @@ export function Home() {
             Github
           </span>
         </a>
-        <a href="/resume.pdf" className={navStyles.glassButton}><span>Resume</span></a>
+        {/* <a href="/resume.pdf" className={navStyles.glassButton}><span>Resume</span></a> */}
       </div>
     </div>
   )
@@ -41,12 +41,12 @@ function TreeAnimation() {
     lengthTrunk: number,
     lengthScaleLeft: number,
     lengthScaleRight: number,
-    lineWidthMin: number,
-    lineWidthMax: number,
+    lineWidthTrunk: number,
+    lineWidthLeaf: number,
     angleLeft: number,
     angleRight: number,
-    colorBase: Color,
-    colorTip: Color
+    colorTrunk: Color,
+    colorLeaf: Color
   }
 
   const randomTreeConfig = (canvasWidth: number, canvasHeight: number): TreeConfig => {
@@ -65,12 +65,12 @@ function TreeAnimation() {
       lengthTrunk: canvasHeight * 0.333,
       lengthScaleLeft: random(0.55, 0.65),
       lengthScaleRight: random(0.55, 0.65),
-      lineWidthMin: 0.5,
-      lineWidthMax: lerp(Math.pow(Math.random(), 2), 4, 10),
+      lineWidthTrunk: 0.5,
+      lineWidthLeaf: lerp(Math.pow(Math.random(), 2), 4, 10),
       angleLeft,
       angleRight,
-      colorBase: hslToRgb(colorBaseHsl),
-      colorTip: hslToRgb(colorTipHsl)
+      colorTrunk: hslToRgb(colorBaseHsl),
+      colorLeaf: hslToRgb(colorTipHsl)
     }
   }
 
@@ -79,22 +79,32 @@ function TreeAnimation() {
   let nextLevel: Float32Array;
 
   function setup(ctx: CanvasRenderingContext2D) {
-    config = randomTreeConfig(ctx.canvas.width, ctx.canvas.height)
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    // const { width, height } = ctx.canvas;
+    config = randomTreeConfig(width, height);
+
     currLevel = new Float32Array(((1 << config.maxDepth) - 1) * 4)
     nextLevel = new Float32Array(((1 << config.maxDepth) - 1) * 4)
   }
 
   function draw(ctx: CanvasRenderingContext2D, frameCount: number) {
-    const { width, height } = ctx.canvas;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     ctx.clearRect(0, 0, width, height);
-    drawTree(ctx, frameCount, width / 2, height, config);
+
+    drawTree(ctx, frameCount, width/2, height, config);
+    ctx.fillStyle = '#000';
+    // ctx.beginPath();
+    // ctx.ellipse(0, 0, width / 2, width / 2, 0, 0, 2 * Math.PI);
+    // ctx.fill();
   }
 
   // Draws tree using level-order traversal so that all segments with the same
   // color can be drawn as a single path.
   function drawTree(ctx: CanvasRenderingContext2D, frameCount: number, x: number, y: number, config: TreeConfig) {
-    const { maxDepth, lengthTrunk, lengthScaleLeft, lengthScaleRight, lineWidthMin, lineWidthMax,
-      angleLeft, angleRight, colorBase, colorTip } = config;
+    const { maxDepth, lengthTrunk, lengthScaleLeft, lengthScaleRight, lineWidthTrunk: lineWidthMin, lineWidthLeaf: lineWidthMax,
+      angleLeft, angleRight, colorTrunk: colorBase, colorLeaf: colorTip } = config;
     ctx.lineCap = 'round'
     currLevel[0] = x
     currLevel[1] = y
@@ -140,6 +150,7 @@ function TreeAnimation() {
   const lineSegmentIsVisible =
     (ctx: CanvasRenderingContext2D, x0: number, y0: number, x1: number, y1: number): boolean =>
   {
+    return true;
     const { width, height } = ctx.canvas;
 
     // If neither of the line segment's endpoints are visible yet it still

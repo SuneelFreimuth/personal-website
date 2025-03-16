@@ -6,14 +6,20 @@ export function AnimatedBackground({ setup, draw }: {
   setup: (ctx: CanvasRenderingContext2D) => void,
   draw: (ctx: CanvasRenderingContext2D, frameCount: number) => void,
 }) {
-  const viewportSize = useViewportSize()
+  const viewport = useViewportSize()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const fitCanvasToViewport = debounce(200, () => {
     if (canvasRef.current) {
       const canvas: HTMLCanvasElement = canvasRef.current
-      canvas.width = viewportSize.width
-      canvas.height = viewportSize.height
+      const ctx = canvasRef.current.getContext('2d')!;
+      
+      const dpr = window.devicePixelRatio ?? 1;
+      canvas.width = viewport.width * dpr;
+      canvas.height = viewport.height * dpr;
+      canvas.style.width = viewport.width + 'px';
+      canvas.style.height = viewport.height + 'px';
+      ctx.scale(dpr, dpr);
     }
   }) as EffectCallback;
 
@@ -40,7 +46,7 @@ export function AnimatedBackground({ setup, draw }: {
     }
   }, [canvasRef])
 
-  useEffect(fitCanvasToViewport, [canvasRef, viewportSize])
+  useEffect(fitCanvasToViewport, [canvasRef, viewport])
 
   return (
     <canvas
