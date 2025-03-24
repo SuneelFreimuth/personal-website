@@ -1,10 +1,16 @@
 $font-sans-serif: 'Inter', sans-serif;
 
-// Darkened Catppuccin Latte Text
-$lightThemeText: hsl(234deg, 16%, 15%);
+//// My theme
+$lightThemeText: hsl(0, 1%, 19%);
 $darkThemeText: white;
-$lightThemeBg: #eff1f5;
+$lightThemeBg: #FAF8F1;
 $darkThemeBg: #1e1e2e;
+
+//// Darkened Catppuccin Latte Text
+// $lightThemeText: hsl(234deg, 16%, 15%);
+// $darkThemeText: white;
+// $lightThemeBg: #eff1f5;
+// $darkThemeBg: #1e1e2e;
 
 $mobileWidth: 500px;
 
@@ -30,7 +36,8 @@ $mobileWidth: 500px;
   box-sizing: border-box;
 
   &::selection {
-    background: #b4befeAA;
+    background: #f8d27baa;
+    // background: #b4befeAA;
   }
 }
 

@@ -131,7 +131,8 @@
   padding: 50px 32px 24px 32px;
 
   &.inProgress {
-    background-color: hsl(223deg, 16%, 83%);
+    background-color: #ede8dd;
+    // background-color: hsl(223deg, 16%, 83%);
     :global(.dark) & {
       background-color: #313244;
     }
