@@ -274,7 +274,7 @@ function SeriesChip({ series, onClick }: ComponentProps<'span'> & { series: Seri
         <Chip
           className={styles.seriesChip}
           fgColor='white'
-          bgColor='#ffcc8e'
+          bgColor='#e8b13c'
           onClick={onClick}
           style={{
             backgroundImage: `url(${patterns.sand.href})`,
@@ -338,12 +338,12 @@ function SeriesChip({ series, onClick }: ComponentProps<'span'> & { series: Seri
         <Chip
           className={styles.seriesChip}
           fgColor='black'
-          bgColor='hsl(182.8deg, 45%, 74.5%)'
+          bgColor='hsl(182.8deg, 25%, 58%)'
           onClick={onClick}
           style={{
             backgroundImage: `url(${patterns.highstorm.href})`,
-            backgroundSize: '320%',
-            backgroundPosition: '90% 31%',
+            backgroundSize: '364%',
+            backgroundPosition: '89% 31.8%',
             backgroundBlendMode: 'luminosity',
           }}
         >
@@ -360,7 +360,7 @@ function SeriesChip({ series, onClick }: ComponentProps<'span'> & { series: Seri
         <Chip
           className={styles.seriesChip}
           fgColor='white'
-          bgColor='hsl(0deg, 0%, 35%)'
+          bgColor='hsl(0deg, 10%, 46%)'
           onClick={onClick}
           style={{
             backgroundImage: `url(${patterns.needles.href})`,

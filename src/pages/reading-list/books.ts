@@ -438,7 +438,22 @@ export const books: Book[] = [
         author: 'Brandon Sanderson',
         description: '',
         image: bookCovers.oathbringer,
+        state: S.Done,
+        series: Series.StormlightArchive,
+    },
+    {
+        title: 'Dawnshard',
+        author: 'Brandon Sanderson',
+        description: '',
+        image: bookCovers.dawnshard,
         state: S.InProgress,
         series: Series.StormlightArchive,
+    },
+    {
+        title: 'Neuromancer',
+        author: 'William Gibson',
+        description: '',
+        image: bookCovers.neuromancer,
+        state: S.InProgress,
     },
 ];
